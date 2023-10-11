@@ -1,0 +1,139 @@
+/* 로그인 타이틀 글자 */
+* {
+	font-family: 'BMJUA';
+}
+
+/* 메인 로그인 화면 */
+.main_window {
+	width: 100%;
+	height: 600px;
+	border: 0px solid black;
+	margin-top: 5%;
+	display: flex;
+	justify-content: center;
+}
+
+/* 로그인 화면 이미지*/
+.main_window .login_img {
+	width: 30%;
+	height: 80%;
+	line-height: 500px;
+	border: 0px solid black;
+	margin-top: 5%;
+	text-align: center;
+	background-image: url(../img/login/login_logo.jpg);
+	background-size: 100% 100%;
+	position: relative;
+}
+
+/* 로그인 글자 */
+.main_window .login_img p {
+	color: black;
+	display: inline-block;
+	line-height: 100%;
+	text-align: left;
+	font-size: 3rem;
+	position: absolute;
+	top: -50px;
+	left: 0px;
+}
+
+/* 로그인 영역 */
+.main_window .login_form {
+	width: 30%;
+	height: 80%;
+	margin-top: 5%;
+	border-right: 0px solid black;
+	position: relative;
+}
+
+.main_window .login_form .login_form_info {
+	border-right: 3px solid black;
+	width: 80%;
+	height: 100%;
+	font-size: 2rem;
+	position: absolute;
+	top: 0%;
+	left: 5%;
+}
+
+.main_window .login_form .login_form_info>p {
+	font-weight: 400;
+}
+
+
+.main_window .login_form .login_form_info .login_form_info_title {
+	font-size: 3rem;
+	font-weight: 500;
+	margin-bottom: 4%;
+}
+
+.main_window .login_form .login_form_info input {
+	height: 30px;
+	width: 90%;
+	font-size: 1.5rem;
+	margin-bottom: 4%;
+}
+
+.main_window .login_form .login_form_info .login_Btn button {
+	border: 2px solid black;
+	background: white;
+	text-align: center;
+	width: 90%;
+	height: 10%;
+	line-height: 140%;
+	font-size: 2rem;
+	margin-top: 5%;
+}
+
+
+.main_window .login_form .login_form_info .login_Btn button:hover {
+	cursor: pointer;
+	border: 2px solid lightskyblue;
+	background: limegreen;
+	background: lightskyblue;
+
+}
+
+
+.main_window .login_form .login_form_info .member_you {
+	border: 0px solid red;
+	width: 80%;
+	height: 17%;
+	font-size: 1.5rem;
+	margin-top: 5%;
+}
+
+.main_window .login_form .login_form_info .member_you a {
+	color: black;
+	font-size: 1.25rem;
+}
+
+.main_window .login_form .login_form_info .member_you a:hover {
+	color: blue;
+}
+
+.main_window .login_form .login_form_info .find_my_id_pw a {
+	font-weight: 600;
+	font-size: 1rem;
+	position: absolute;
+	top: 75%;
+	left: 0;
+}
+
+.main_window .login_form .login_form_info .find_my_id_pw a:hover {
+	cursor: pointer;
+	color: blue;
+}
+
+/* 맨 하단 배너 */
+.banner {
+	height: 80px;
+	width: 90%;
+	border: 1px solid black;
+	position: absolute;
+	top: 83%;
+	left: 0;
+	background-image: url(../img/login/loginbanner.jpg);
+	background-size: 100% 100%;
+}

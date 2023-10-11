@@ -1,0 +1,73 @@
+@font-face {
+    font-family: 'omyu_pretty';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+html {
+	background: darkgray;
+	font-family: omyu_pretty;
+}
+
+
+.main_winodw {
+	border: 1px solid black;
+	width: 100%; height: 100%;
+	margin-top: 5%;
+	background: white;
+	position: relative;
+}
+
+.main_winodw .main_title_header {
+	border: 0px solid green;
+	display: flex;
+	justify-content: space-between;
+	width: 80%; height: 80px;
+	margin: 2% auto;
+	font-size: 5rem;
+	line-height: 100%;
+}
+
+.main_winodw p:last-child {
+	font-size: 2rem;
+
+}
+
+.main_winodw p:last-child:hover {
+	cursor: pointer;
+	border-bottom: 5px solid lightskyblue;
+}
+
+.main_winodw .reserv_AM_Data {
+	border: 0px solid red;
+	width: 80%;
+	margin: 3% auto;
+}
+
+.main_winodw .reserv_AM_Data > p {
+	font-size: 4rem;
+}
+
+.main_winodw .reserv_AM_Data .reserv_AM_Table {
+	width: 100%;
+	border: 0px solid blue;
+	text-align: center;
+	border-bottom: 4px solid lightskyblue;
+}
+
+.main_winodw .reserv_AM_Data .reserv_AM_Table .reserv_AM_Table_Header {
+	font-size: 3rem;
+	background: lightskyblue;
+}
+
+.main_winodw .reserv_AM_Data .reserv_AM_Table tr {
+	border-bottom: 2px solid lightskyblue;
+}
+
+.main_winodw .reserv_AM_Data .reserv_AM_Table tr td {
+	font-size: 2rem;
+	height: 60px;
+}
+
+

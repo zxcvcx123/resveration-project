@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<!-- 타임리프사용해서 동적으로 값을 추가하거나 처리 한마디로 서버에 값을 불러오거나 매개변수 값 같은걸 추가하거나 처리가능-->
+
+<head>
+	<meta charset="UTF-8">
+	<title>게시판</title>
+	<link rel="stylesheet" type="text/css" href="/css/common.css">
+	<link rel="stylesheet" type="text/css" href="/css/notice.css">
+	<script src="/js/common.js"></script>
+</head>
+
+<body>
+
+	<header th:replace="common/fragments/header :: HeaderFragment">
+		<p>헤더영역</p>
+	</header>
+
+	<div class="total_Window">
+		<h3>게시판</h3>
+
+		<!-- 검색 bar -->
+		<div class="searchBar">
+			<div>
+				<select>
+					<option value="공지" selected>공지사항</option>
+					<option value="잡담">잡담</option>
+					<option value="문의">문의</option>
+				</select>
+			</div>
+			<div>
+				<input type="text" placeholder="검색어를 입력해주세요.">
+			</div>
+			<div>
+				<a>검색</a>
+			</div>
+		</div>
+
+
+		<!-- 게시글 table -->
+		<div class="content_Table">
+
+			<div class="table_Header">
+				<span class="total" th:text="'Total '+ ${totalList}+ '건'"></span>
+				<div class="writeBtn">
+					<a href="/noticeWrite?saveMode=INSERT">글 쓰기</a>
+				</div>
+			</div>
+			<table class="main_Table" th:if="${role != 'admin'}">
+				<thead>
+					<tr>
+						<th style="display: none;">글 번호</th>
+						<th>글 타입</th>
+						<th>제목</th>
+						<th>작성자</th>
+						<th>작성시간</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="list, listStat: ${list}">
+						<td th:text="${list.idx}" style="display: none;"></td>
+						<td th:text="${list.type}"></td>
+						<td><a th:href="@{/notice/{idx}(idx= ${list.idx})}" th:text="${list.title}"></a></td>
+						<td
+							th:text="${#strings.substring(list.writer, 0, 1)} + ${#strings.repeat('*', #strings.length(list.writer) - 1)}">
+						</td>
+						<td th:text="${list.date}"></td>
+					</tr>
+				</tbody>
+			</table>
+
+			<table class="main_Table" th:if="${role == 'admin'}">
+				<thead>
+					<tr>
+						<th style="display: none;">글 번호</th>
+						<th>글 타입</th>
+						<th>제목</th>
+						<th>작성자</th>
+						<th>작성시간</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="list, listStat: ${list}">
+						<td th:text="${list.idx}" style="display: none;"></td>
+						<td th:text="${list.type}"></td>
+						<td><a th:href="@{/notice/{idx}(idx= ${list.idx})}" th:text="${list.title}"></a></td>
+						<td th:text="${list.writer}"></td>
+						<td th:text="${list.date}"></td>
+					</tr>
+				</tbody>
+			</table>
+			
+			<!--페이징처리-->
+			<div class="paging_Area">
+				
+				<a th:href="@{/notice?page=1}"><< 처음</a>
+				
+				&nbsp;
+				&nbsp;
+				
+				<th:block th:if="${nowPage > 10}">
+					<a th:href="@{/notice(page = ${startPage - 10})}">< 이전</a>
+				</th:block>
+				
+				&nbsp;
+				
+				<th:block th:each="num : ${#numbers.sequence(startPage, endPage)}">
+					
+					<a th:href="@{/notice(page = ${num})}" th:text="${num}" th:style="${nowPage == num?'color: red':'color:'}"></a>
+			
+				</th:block>
+				
+				&nbsp;
+				
+				<th:block th:if="${lastPage >= endPage + 1}">
+					<a th:href="@{/notice(page = ${endPage+1})}"> 다음 ></a>
+				</th:block>
+				
+				&nbsp;
+				&nbsp;
+				
+				<a th:href="@{/notice(page = ${lastPage})}">끝 >></a>
+				
+			</div>
+		</div>
+	</div>
+	
+	<br> <br> <br> <br> <br> <br>
+	<br> <br> <br> <br> <br> <br>
+	<br> <br> <br> <br> <br> <br>
+	<br> <br> <br> <br> <br> <br>
+	<br> <br> <br> <br> <br> <br>
+	
+</body>
+
+</html>

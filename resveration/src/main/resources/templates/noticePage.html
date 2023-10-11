@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<!-- 타임리프사용해서 동적으로 값을 추가하거나 처리 한마디로 서버에 값을 불러오거나 매개변수 값 같은걸 추가하거나 처리가능-->
+
+<head>
+	<meta charset="UTF-8">
+	<title>글 쓰기</title>
+
+	<link rel="stylesheet" type="text/css" href="/css/common.css">
+	<link rel="stylesheet" type="text/css" href="/css/noticePage.css">
+
+</head>
+
+<body>
+
+	<header th:replace="common/fragments/header :: HeaderFragment">
+		<p>헤더영역</p>
+	</header>
+
+	<div class="total_Window">
+		<h3>글쓰기</h3>
+
+		<!-- form 영역 -->
+		<div class="form_Window">
+			<form method="post" action="/noticeWriteDo">
+				<table style="text-align: center;">
+					<tr>
+						<th>종류</th>
+						<td th:text="${notice.type}"></td>
+					</tr>
+					<tr>
+						<th>제목</th>
+						<td th:text="${notice.title}"></td>
+					</tr>
+					<tr>
+						<th>내용</th>
+						<td th:text="${notice.content}"></td>
+					</tr>
+				</table>
+				<div class="btns">
+					<button type="button" onclick="modiBtn()">수정</button>
+					<button type="button" onclick="deleteBtn()">삭제</button>
+				</div>
+				<input type="hidden" name="idx" th:value="${idx}">
+			</form>
+		</div>
+
+
+
+	</div>
+	
+	<br> <br> <br> <br> <br>
+	<br> <br> <br> <br> <br>
+	<br> <br> <br> <br> <br>  
+	<br> <br> <br> <br> <br>  
+	<br> <br> <br> <br> <br>  
+	<br> <br> <br> <br> <br>  
+	
+	<script type="application/javascript" src="/js/common.js"></script>
+	<script type="application/javascript" src="/js/noticePage.js"></script>
+
+</body>
+
+</html>

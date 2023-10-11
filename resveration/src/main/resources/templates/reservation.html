@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"> 
+<!-- 타임리프사용해서 동적으로 값을 추가하거나 처리 한마디로 서버에 값을 불러오거나 매개변수 값 같은걸 추가하거나 처리가능-->
+<head>
+<meta charset="UTF-8">
+<title>예약</title>
+<link rel="stylesheet" type="text/css" href="/css/common.css">
+<link rel="stylesheet" type="text/css" href="/css/reservation.css">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+</head>
+<body>
+	
+	<header th:replace="common/fragments/header :: HeaderFragment">
+		<p>헤더영역</p>
+	</header>
+	
+    <!-- main_window / 메인화면 시작 -->
+    <div class="main_window">
+        <button>일정표</button>
+        <button onclick="location.href='/request?saveMode=INSERT'">예약하기</button>
+    </div>
+    <!-- reservation_window / 예약화면 시작 -->
+    <div class="reservation_window">
+        <button class="month_Left_Btn" id="month_Left_Btn" onclick="left_Btn()"><</button>
+        <div class="year" id="load_year">년도</div>
+        <div class="month" id="load_month">월</div>
+        <button class="month_Right_Btn" id="month_Right_Btn" onclick="right_Btn()">></button>
+    </div>
+    
+    <!-- candle / 일정표 -->
+    <div class="candle">
+        <p>일정표</p> 
+        <span>※내 예약확인에서 수정 / 취소 가능합니다.</span>
+        <div class="candle_Today" id="myBtn" onclick="myBtn()">
+            <button class="candle_Myresveration_Btn">내 예약확인</button>
+        </div>  
+    </div>
+
+    <!-- candle_Table / 달력 테이블 -->
+    <div class="candle_Table">
+        <table class="candle_Table_Start">
+            <tr>
+                <td>일</td>
+                <td>월</td>
+                <td>화</td>
+                <td>수</td>
+                <td>목</td>
+                <td>금</td>
+                <td>토</td>
+            </tr>
+        </table>
+        <table class="candle_Table_Start_Day" id="candle_Table_Start_Day">
+	        
+    	</table>
+    </div>
+	<br> <br> <br> <br> <br> <br> <br> <br> 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<script src="/js/reservation.js"></script>
+<script th:inline="javascript">
+	/* 
+		서버쪽에 저장된 모든 예약일 전부 가져오기 
+		스크립트로 예약 건수 if문 돌려서 노출에 필요 
+	*/
+    let getDay = /*[[${getDay}]]*/ㅇ;
+</script>
+</body>
+</html>
+

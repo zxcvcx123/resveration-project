@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"> 
+<!-- 타임리프사용해서 동적으로 값을 추가하거나 처리 한마디로 서버에 값을 불러오거나 매개변수 값 같은걸 추가하거나 처리가능-->
+<head>
+<meta charset="UTF-8">
+<title>예약현황</title>
+<link rel="stylesheet" type="text/css" href="/css/common.css">
+<link rel="stylesheet" type="text/css" href="/css/reservation_status.css">
+</head>
+<body>
+	<div class="main_winodw">
+	<div>
+		<div class="main_title_header">
+			<p class="main_title">예약자 현황</p> <p id="btn">닫기 X</p>
+		</div>
+		<div class="reserv_AM_Data"> 
+			<p>예약 정보</p>
+			<table class="reserv_AM_Table">
+				<tr class="reserv_AM_Table_Header">
+					<th>성함</th>
+					<th>연락처</th>
+					<th>예약 인원</th>
+					<th>예약 시간</th>
+					<th>종류</th>	
+				</tr>
+				<tr th:each="getReserv : ${getReserv}">
+					<td th:text="${getReserv.name}"></td>
+					<td th:text="${getReserv.phone}"></td>
+					<td th:text="${getReserv.count} + 명"></td>
+					<td th:text="${getReserv.time}"></td>
+					<td th:text="${getReserv.type}"></td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	
+<script src="/js/common.js"></script>
+<script src="/js/reservation_status.js"></script>
+</body>
+</html>

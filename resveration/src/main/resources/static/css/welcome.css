@@ -1,0 +1,37 @@
+* {
+	font-family: 'BMJUA';
+}
+
+.main_window {
+	height: 50px;
+	/* border: 0px solid black; */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 50px;
+	font-size: 1.25rem;
+	text-align: center;
+	line-height: 50px;
+}
+
+.welcome,
+.welcome_addr {
+	margin-top: 5%;
+	font-size: 2rem;
+	margin-bottom: 2%;
+}
+
+.iw_inner {
+	height: 61px;
+	text-align: center;
+}
+
+.iw_inner > h3 {
+	height: 35px;
+	line-height: 35px;
+}
+
+.iw_inner > p {
+	height: 21px;
+	line-height: 21px;
+}

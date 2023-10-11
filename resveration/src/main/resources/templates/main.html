@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"> 
+<!-- 타임리프사용해서 동적으로 값을 추가하거나 처리 한마디로 서버에 값을 불러오거나 매개변수 값 같은걸 추가하거나 처리가능-->
+<head>
+<meta charset="UTF-8">
+<title>메인</title>
+<link rel="stylesheet" type="text/css" href="/css/common.css">
+<script src="/js/common.js"></script>
+</head>
+<body>
+	<!-- main_Header / 최상단 메뉴 바 -->
+    <div class="main_Header">
+        <!-- main_Menu / 홈~오시는길 메뉴 -->
+        <ul class="main_Menu">
+            <li><a href="/home">홈</a></li>
+            <li><a href="#">촬영 종류</a></li>
+            <li><a href="/reservation">예약하기</a></li>
+            <li><a href="#">오시는길</a></li>
+        </ul>
+        <!-- login_Menu / 로그인 메뉴 -->
+        <ul class="login_Menu">
+            <li><a href="/login" th:if="${username != ''}">로그아웃</a></li>
+        </ul>
+    </div>
+</body>
+</html>

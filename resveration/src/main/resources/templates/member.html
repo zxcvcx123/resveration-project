@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"> 
+<!-- 타임리프사용해서 동적으로 값을 추가하거나 처리 한마디로 서버에 값을 불러오거나 매개변수 값 같은걸 추가하거나 처리가능-->
+<head>
+<meta charset="UTF-8">
+<title>회원가입</title>
+<link rel="stylesheet" type="text/css" href="/css/common.css">
+<link rel="stylesheet" type="text/css" href="/css/member.css">
+</head>
+<body>
+	<div class="main_window">
+		<p class="main_title">회원가입</p>
+		<div class="member_window">
+			<form id="memberInfo">
+				<p>아이디</p>
+				<div class="id">
+					<input type="text" placeholder="아이디를 입력해주세요" name="id" oninput="checkForm()"><button type="button" id="idCheck" onclick="checkID()">중복확인</button>
+					<p class="checkFont">영문, 숫자만 입력 가능합니다.</p>
+				</div>
+				
+				<p>비밀번호</p>
+				<div class="pw">
+					<input type="password" placeholder="비밀번호를 입력해주세요" name="pw" oninput="checkForm()">
+					<p class="checkFont">최소 8자리에 숫자, 문자, 특수문자 각 1개 이상 포함해 입력해주세요.</p>
+				</div>
+				<p>비밀번호 확인</p>
+				<div class="pwCheck">
+					<input type="password" placeholder="비밀번호 확인" name="pwCheck" oninput="checkForm()"> 
+					<p class="checkFont">비밀번호가 다릅니다!</p>
+				</div>	
+				<p>이름</p>
+				<div class="name">
+					<input type="text" placeholder="성함을 입력해주세요" name="name" oninput="checkForm()">
+					<p class="checkFont">한글, 영문만 입력 가능합니다.</p>
+				</div>
+				<p>연락처</p>
+				<div class="phone">
+					<input type="text" placeholder="010-0000-0000" maxlength="13" name="phone" oninput="checkForm()">
+					<p class="checkFont">올바르지 못한 연락처 방식입니다. 예)010-0000-0000</p>
+				</div>
+				<p>이메일</p>
+				<div class="email">
+					<input type="text" placeholder="이메일" name="email1" oninput="checkForm()"> @
+					<input type="text" name="email2" value="" style="display: none;">
+					<select id="emailSelect">
+						<option value="선택" selected>선택</option>
+						<option value="naver.com">naver.com</option>
+						<option value="daum.net">daum.net</option>
+						<option value="gmail.com">gmail.com</option>
+						<option value="직접입력">직접입력</option>
+					</select>
+					<p class="checkFont">이메일 형식이 다릅니다. 예)abcd123@naver.com</p>
+				</div>
+				<div class="join">
+					<button type="button" id="submitBtn" onclick="memberJoin()">가입하기</button>
+					<button type="button" onclick ="location.href='/login'">취소</button>
+				</div>
+			</form>
+		</div>
+	</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-serialize-object/2.5.0/jquery.serialize-object.min.js" integrity="sha512-Gn0tSSjkIGAkaZQWjx3Ctl/0dVJuTmjW/f9QyB302kFjU4uTNP4HtA32U2qXs/TRlEsK5CoEqMEMs7LnzLOBsA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="/js/common.js"></script>
+<script src="/js/member.js"></script>
+</body>
+</html>

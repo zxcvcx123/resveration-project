@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"> 
+<!-- 타임리프사용해서 동적으로 값을 추가하거나 처리 한마디로 서버에 값을 불러오거나 매개변수 값 같은걸 추가하거나 처리가능-->
+<head>
+<meta charset="UTF-8">
+<title>예약현황</title>
+<link rel="stylesheet" type="text/css" href="/css/common.css">
+<link rel="stylesheet" type="text/css" href="/css/myreservation.css">
+</head>
+<body>
+	<div class="main_winodw">
+	<div>
+		<div class="main_title_header">
+			<p class="main_title">예약자 현황</p> <p id="btn">닫기 X</p>
+		</div>
+		<div class="reserv_AM_Data"> 
+			<p>예약 정보</p>
+			<table class="reserv_AM_Table">
+				<tr class="reserv_AM_Table_Header">
+					<th>성함</th>
+					<th>연락처</th>
+					<th>일자</th>
+					<th>인원</th>
+					<th>시간</th>
+					<th>종류</th>	
+					<th></th>
+				</tr>
+				<tr th:each="myData : ${myData}">
+					<td th:text="${myData.name}"></td>
+					<td th:text="${myData.phone}"></td>
+					<td th:text="${myData.day}"></td>
+					<td th:text="${myData.count} + 명"></td>
+					<td th:text="${myData.time}"></td>
+					<td th:text="${myData.type}"></td>
+					<td><a th:href="@{/request(saveMode='UPDATE', idx=${myData.idx})}">수정</a>&nbsp;<a href="#" id="delBtn" th:data-idx="${myData.idx}" onclick="delBtn(this)">취소</a></td>
+				</tr>
+			</table>
+		</div>
+	</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<script src="/js/common.js"></script>
+<script src="/js/myreservation.js"></script>
+</body>
+</html>

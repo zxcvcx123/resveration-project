@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 위는 그냥 복붙 -->
+
+<!-- <mapper namespace="매퍼 또는 DAO클래스명">
+
+  <select id="명령어 클래스명" resultType="반환타입" 예)"UserDTO" parameterType="매개변수에 들어가는 타입" 예)"String">
+    쿼리문 예)SELET userid FROM user WHERE userid = #{}; #{}은 매개변수 넣기위한 문법이다
+  </select>
+
+</mapper> -->
+
+<!-- 
+resultType 및 parameterType 관련 꿀팁
+만약 여러개 조인 한 값을 result하고 싶으면 형식이 정해져 있는 예)잘 변하지 않는 규격화된 게시판 같은거는 DTO를 아예 만들어서 result 시키고
+그게 아닌면 Map을 통해서 사용하기
+
+파라미터는 매개변수값이 여러 타입이면 Map 활용
+-->
+
+<mapper namespace="com.example.demo.mapper.MainMapper">
+
+	 <!-- 회원가입하기 -->
+	 <insert id="memberDo" parameterType="com.example.demo.dto.UserDTO">
+	 	INSERT INTO
+	 		user(
+	 				id,
+	 				pw,
+	 				name,
+	 				phone,
+	 				email,
+	 				role,
+	 				date
+	 			)
+	 		VALUES(
+	 				#{id},
+	 				#{pw},
+	 				#{name},
+	 				#{phone},
+	 				#{email},
+	 				#{role},
+	 				#{date}
+	 				);
+	 </insert>
+	
+	 <!-- 로그인하기 -->
+	 <select id="searchId" parameterType="com.example.demo.dto.UserDTO">
+	 	SELECT * FROM user WHERE id = #{userId};
+	 </select>
+	 
+	 <!-- 아이디 중복확인 -->
+	 <select id="checkId" resultType="String">
+	 	SELECT id FROM user WHERE id = #{checkId};
+	 </select>
+	 
+	 <!-- 일정 예약하기 -->
+	 <insert id="requestdo" parameterType="com.example.demo.dto.BoardDTO">
+		INSERT INTO 
+			board(
+					boardid,
+					name, 
+					phone, 
+					count, 
+					day, 
+					time, 
+					timetype,
+					type, 
+					boarddate
+				  ) 
+			VALUES(
+					#{boardid},
+					#{name}, 
+					#{phone}, 
+					#{count}, 
+					#{day}, 
+					#{time}, 
+					#{timetype},
+					#{type}, 
+					#{boarddate}
+				   )
+	</insert>
+	
+	<!-- 예약일자 전부 가져오기 -->
+	<select id="getDay" parameterType="List">
+		SELECT day FROM board;
+	</select>
+	
+	<!-- 예약일 / 예약시간 가져오기 -->
+	<select id="getDayTime" resultType="com.example.demo.dto.BoardDTO">
+		SELECT day, time, timetype FROM board;
+	</select>
+	
+	<!-- 예약일자에 맞는 예약인원 가져오기 -->
+	<select id="getReservation" parameterType="com.example.demo.dto.BoardDTO">
+		SELECT * FROM board WHERE day = #{date} ORDER BY time ASC;
+	</select>
+	
+	<!-- 내 예약현황 가져오기 -->
+	<select id="getMyReservation" parameterType="com.example.demo.dto.BoardDTO">
+		SELECT * FROM board WHERE boardid = #{userId} ORDER BY day ASC, time ASC;
+	</select>
+	
+	<!-- 내 예약현화 수정하기 정보가져오기 -->
+	<select id="getMyReservationUPDATE" parameterType="com.example.demo.dto.BoardDTO">
+		SELECT * FROM board WHERE idx = #{idx};
+	</select>
+	
+	<!-- 예약정보 수정하기 -->
+	<update id="updatedo" parameterType="com.example.demo.dto.BoardDTO">
+		UPDATE board 
+			SET name = #{name}, 
+				phone = #{phone}, 
+				count = #{count}, 
+				day = #{day}, 
+				time = #{time},
+				timetype = #{timetype}, 
+				type = #{type},
+				boarddate = #{boarddate}
+		WHERE idx = #{idx};
+	</update>
+	
+	<!-- 예약취소하기 -->
+	<delete id="deleteMyReservation" parameterType="String">
+		DELETE FROM board WHERE idx = #{idx};
+	</delete>
+	
+	<!-- 게시판 글쓰기 기능 -->
+	<insert id="noticeWriteDo" parameterType="com.example.demo.dto.NoticeDTO">
+		INSERT INTO 
+			notice(
+					type,
+					title,
+					content,
+					writer,
+					writerid,
+					date,
+					modifydate
+				  ) 
+			VALUES(
+					#{type},
+					#{title}, 
+					#{content}, 
+					#{writer}, 
+					#{writerid}, 
+					#{date}, 
+					#{modifydate}
+				   )
+	</insert>
+	
+	<!-- 특정(idx 기준) 게시판 글 내용 가져오기 -->
+	<select id="getIdxNotice" resultType="map">
+		SELECT * FROM notice WHERE idx = #{idx};
+	</select>
+	
+	<!-- 게시판 글 업데이트 -->
+	<update id="noticeUpdate" parameterType="com.example.demo.dto.NoticeDTO">
+		UPDATE notice 
+		SET type = #{type},
+			title = #{title},
+			content = #{content},
+			writer = #{writer},
+			writerid = #{writerid},
+			modifydate = #{modifydate}
+		WHERE idx = #{idx};
+	</update>
+	
+	<!-- 게시판 글 삭제 -->
+	<delete id="noticeDelete" parameterType="String">
+		DELETE FROM notice WHERE idx=#{idx};
+	</delete>
+	
+	
+	<!-- 페이징 처리 관련 -->
+	<!-- 게시판 글 목록 가져오기 / limitNoticeList 만큼 -->
+	<select id="getNoticeList" resultType="com.example.demo.dto.NoticeDTO">
+		
+		<if test="field == null or field == ''">
+			SELECT * FROM notice ORDER BY idx DESC LIMIT #{limitNoticeNowPage}, #{limitNoticeList};
+		</if>
+		
+		<if test="field == '전체'">
+			SELECT * FROM notice
+				<if test="keyword != null">
+					WHERE title LIKE CONCAT('%',#{keyword},'%') 
+				</if>
+			ORDER BY idx DESC LIMIT #{limitNoticeNowPage}, #{limitNoticeList};
+		</if>
+		
+		<if test="field == '공지'">
+			SELECT * FROM notice WHERE type = #{field}
+				<if test="keyword != null">
+					title LIKE CONCAT('%',#{keyword},'%') 
+				</if>
+			ORDER BY idx DESC LIMIT #{limitNoticeNowPage}, #{limitNoticeList};	
+		</if>
+		
+		<if test="field == '잡담'">
+			SELECT * FROM notice WHERE type = #{field}
+				<if test="keyword != null">
+					title LIKE CONCAT('%',#{keyword},'%') 
+				</if>
+			ORDER BY idx DESC LIMIT #{limitNoticeNowPage}, #{limitNoticeList};	
+		</if>
+		
+		<if test="field == '문의'">
+			SELECT * FROM notice WHERE type = #{field}
+				<if test="keyword != null and keyword != ''">
+					title LIKE CONCAT('%',#{keyword},'%') 
+				</if>
+			ORDER BY idx DESC LIMIT #{limitNoticeNowPage}, #{limitNoticeList};	
+		</if>
+		
+	</select>
+	
+	<!-- 게시판 글 총 개수 -->
+	<select id="noticeTotal" resultType="Integer">
+	
+		<if test="field == null">
+			SELECT COUNT(*) FROM notice;
+		</if>
+	
+		<if test="field == '전체'">
+			SELECT COUNT(*) FROM notice;
+		</if>
+		
+		<if test="field == '공지'">
+			SELECT COUNT(*) FROM notice WHERE type = #{field}
+		</if>
+		
+		<if test="field == '잡담'">
+			SELECT COUNT(*) FROM notice WHERE type = #{field}
+		</if>
+		
+		<if test="field == '문의'">
+			SELECT COUNT(*) FROM notice WHERE type = #{field}
+		</if>
+		
+	</select>
+
+</mapper>

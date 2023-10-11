@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+  
+<configuration>
+	<settings>
+    	<setting name="logImpl" value="LOG4J2" /> <!-- 또는 SLF4J, LOG4J 등 다른 로깅 라이브러리 선택 -->
+  	</settings>
+	<mappers>
+		<package name="com.example.demo.mapper"/>
+	</mappers>
+</configuration>

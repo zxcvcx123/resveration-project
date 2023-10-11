@@ -1,0 +1,68 @@
+/* common css */
+@font-face {
+    font-family: 'omyu_pretty';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'BMJUA';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMJUA.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+
+* {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-decoration: none;
+    color: black;
+}
+
+body {
+    width: 80%;
+    margin: 0 auto;
+}
+
+/* 버튼 기본 스타일 없애기 */
+button {
+    border: 0;
+    outline: 0;
+    background: none;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+/* main_Header  / 최상단 메뉴 바 */
+.main_Header {
+    width: 100%; height: 100px;
+    /* border: 1px solid black; */
+    border-bottom: 1px solid black;
+    font-size: 2rem;
+    line-height: 100px;
+    display: flex;
+    justify-content: space-between;
+    font-family: 'BMJUA';
+}
+
+.main_Header ul li a:hover {
+    border-bottom: 2px solid black;
+}
+
+.main_Header .main_Menu {
+    
+    min-width: 60%;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* login_Menu / 로그인 메뉴 */
+.main_Header .login_Menu {
+    font-size: 1.75rem;
+}

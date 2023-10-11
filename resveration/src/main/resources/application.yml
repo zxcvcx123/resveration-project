@@ -1,0 +1,36 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force-response: true
+
+#스프링 및 db 연결       
+spring:
+  web:
+    resources:
+      static-locations: classpath:/static/
+  datasource:
+    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+    url: jdbc:log4jdbc:mysql://127.0.0.1:3306/reservation?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Seoul
+    username: root
+    password: admin
+    
+mybatis:
+  mapper-locations: 
+    - classpath:/mybatis/**/*.xml
+
+    
+logging:
+  level:
+    org.mybatis.spring.SqlStatementInterceptor: TRACE
+
+# yaml/yml 파일 - Thymeleaf 설정
+thymeleaf:
+  cache: false
+  check-template-location: true
+  prefix: classpath:/templates/
+  suffix: .html
+  enabled: true

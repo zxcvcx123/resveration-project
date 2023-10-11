@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!-- 타임리프사용해서 동적으로 값을 추가하거나 처리 한마디로 서버에 값을 불러오거나 매개변수 값 같은걸 추가하거나 처리가능-->
+
+<head>
+	<meta charset="UTF-8">
+	<title>로그인</title>
+	<link rel="stylesheet" type="text/css" href="/css/common.css">
+	<link rel="stylesheet" type="text/css" href="/css/login.css">
+</head>
+
+<body>
+
+	<div class="main_window">
+		
+		
+		<div class="login_img">
+			<p>로그인</p>
+		</div>
+		<div class="login_form">
+			<form class="login_form_info" action="/loginDo" method="post">
+				<p>아이디</p>
+				<input type="text" placeholder="ID" name="userId">
+
+				<p>비밀번호</p>
+				<input type="password" placeholder="password" name="userPw">
+
+				<div class="login_Btn">
+					<button type="submit">Login</button>
+				</div>
+
+				<div class="member_you">
+					<p>회원이 아니신가요?</p>
+					<a href="/member">회원가입</a>
+				</div>
+
+				<div class="find_my_id_pw">
+					<a href="/find">아이디/비밀번호 찾기</a>
+				</div>
+
+				<div class="banner">
+				</div>
+
+			</form>
+		</div>
+	</div>
+	<script src="/js/common.js"></script>
+</body>
+
+</html>

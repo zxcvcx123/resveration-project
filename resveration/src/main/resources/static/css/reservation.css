@@ -1,0 +1,178 @@
+/* main_window / 메인화면 시작 */
+.main_window {
+    height: 50px;
+    /* border: 0px solid black; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+    font-size: 1.25rem;
+    text-align: center;
+    line-height: 50px;
+}
+
+.main_window > button {
+	height: 40px;
+    font-size: 2rem;
+    /* border-radius: 5px; */
+    display: block;
+    font-family: 'BMJUA';
+}
+
+.main_window > button:first-child {
+    margin-right: 30px;
+    width: 100px;
+}
+
+.main_window > button:last-child {
+    
+    width: 130px;
+}
+
+.main_window > button:hover {
+    color: lightskyblue;
+    cursor: pointer;
+    border-bottom: 2px solid lightskyblue;
+}
+
+/* reservation_window / 예약화면 시작 */
+.reservation_window {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    line-height: 100%;
+    align-items: center;
+    margin-top: 20px;
+    font-size: 2.25rem;
+}
+
+.reservation_window span {
+    height: 100%;
+    border-bottom: 0px solid wheat;
+    font-size: 2.5rem;
+}
+
+.reservation_window div {
+    border-bottom: 0px solid wheat;
+}
+
+.reservation_window .year {
+    margin-right: 15px;
+}
+
+.reservation_window .month_Left_Btn {
+    margin-right: 20px;
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+.reservation_window .month_Right_Btn {
+    margin-left: 20px;
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+
+/* candle / 일정표 */
+.candle {
+    width: 100%; height: 50px;
+    /* border: 1px solid black; */
+    font-size: 2rem;
+    line-height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'BMJUA';
+}
+
+.candle p {
+    color: lightskyblue;
+}
+
+.candle span {
+	color: red;
+	font-size: 1rem;
+	margin-left: 62%;
+}
+
+.candle .candle_Today {
+    width: 10%; height: 48px;
+    border: 1px solid rgb(232, 227, 227);
+    text-align: center;
+    line-height: 48px;
+    
+}
+
+.candle .candle_Today:hover {
+	cursor: pointer;
+	background:  lightskyblue;
+}
+
+.candle .candle_Today .candle_Myresveration_Btn {
+    font-size: 1.4rem;
+    font-family: 'BMJUA';
+}
+
+.candle .candle_Today .candle_Myresveration_Btn:hover {
+    cursor: pointer;
+}
+
+/* candle_Table / 달력 테이블 */
+.candle_Table {
+    width: 100%; height: 700px;
+    border: 0px solid black;
+    margin-top: 5px;
+}
+
+.candle_Table .candle_Table_Start {
+    width: 100%; height: 15%;
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+.candle_Table .candle_Table_Start tr {
+    border: 1px solid black;
+    background: lightcyan;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+
+.candle_Table .candle_Table_Start td {
+    border: 1px solid black;
+    text-align: center;
+}
+
+.candle_Table .candle_Table_Start_Day {
+    width: 100%; height: 100%;
+    border: 1px solid black;
+    border-collapse: collapse;
+    font-size: 1.25rem;
+}
+
+.candle_Table .candle_Table_Start_Day tr {
+    border: 1px solid black;
+}
+
+.candle_Table .candle_Table_Start_Day td {
+    border: 1px solid black;
+    position: relative;
+}
+
+.candle_Table .candle_Table_Start_Day a {
+    border: 0px solid black;
+    position: absolute; top: 0;
+    font-size: 1.5rem;
+}
+
+.candle_Table .candle_Table_Start_Day .dd {
+    border-bottom: 2px solid black;
+    position: absolute; top: 40%; left: 30%;
+    font-size: 1.25rem;
+}
+
+.candle_Table .candle_Table_Start_Day .dd:hover {
+    border-bottom: 2px solid blue;
+    color: blue;
+}

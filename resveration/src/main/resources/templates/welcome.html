@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"> 
+<!-- 타임리프사용해서 동적으로 값을 추가하거나 처리 한마디로 서버에 값을 불러오거나 매개변수 값 같은걸 추가하거나 처리가능-->
+<head>
+<meta charset="UTF-8">
+<title>오시는길</title>
+<link rel="stylesheet" type="text/css" href="/css/common.css">
+<link rel="stylesheet" type="text/css" href="/css/welcome.css">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+</head>
+<body>
+	
+	<header th:replace="common/fragments/header :: HeaderFragment">
+		<p>헤더영역</p>
+	</header>
+
+    <!-- main_window / 메인화면 시작 -->
+    <P class="welcome">오시는길</P>
+    
+    <!-- 지도 시작 -->
+    <div id="map" style="width:100%; height:400px;"></div>
+    
+	<!--<p class="welcome_addr">상세 주소</p>-->
+	
+</script>
+<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=m8p10mb9mb"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<script src="/js/welcome.js"></script>
+</body>
+</html>

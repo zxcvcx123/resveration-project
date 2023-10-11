@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<!-- 타임리프사용해서 동적으로 값을 추가하거나 처리 한마디로 서버에 값을 불러오거나 매개변수 값 같은걸 추가하거나 처리가능-->
+
+<head>
+	<meta charset="UTF-8">
+	<title>글 쓰기</title>
+
+	<link rel="stylesheet" type="text/css" href="/css/common.css">
+	<link rel="stylesheet" type="text/css" href="/css/noticeWrite.css">
+
+</head>
+
+<body>
+
+	<header th:replace="common/fragments/header :: HeaderFragment">
+		<p>헤더영역</p>
+	</header>
+
+	<div class="total_Window">
+		<h3>글쓰기</h3>
+
+		<!-- form 영역 -->
+		<div class="form_Window">
+			<form method="post" action="/noticeWriteDo">
+				<table>
+					<tr th:if="${role != 'admin'}">
+						<th>종류</th>
+						<td>
+							<select name="type">
+								<option value="선택" selected>선택</option>
+								<option  value="잡담" th:selected="${notice.type} == '잡담'">잡담</option>
+								<option  value="문의" th:selected="${notice.type} == '문의'">문의</option>
+							</select>
+						</td>
+					</tr>
+					
+					<tr th:if="${role == 'admin'}">
+						<th>종류</th>
+						<td>
+							<select name="type">
+								<option value="선택" selected>선택</option>
+								<option  value="잡담" th:selected="${notice.type} == '공지사항'">공지사항</option>
+								<option  value="잡담" th:selected="${notice.type} == '잡담'">잡담</option>
+								<option  value="문의" th:selected="${notice.type} == '문의'">문의</option>
+							</select>
+						</td>
+					</tr>
+					
+					<tr>
+						<th>제목</th>
+						<td><input type="text" name="title" th:value="${notice.title}"></td>
+					</tr>
+					<tr>
+						<th>내용</th>
+						<td><textarea cols="5" name="content" th:text="${notice.content}"></textarea></td>
+					</tr>
+				</table>
+				<div class="btns" th:if=${role != 'outSide' && role == 'admin'})>
+					<button type="submit">작성</button>
+					<button type="button" onclick="location.href='/notice'">취소</button>
+				</div>
+				<input type="hidden" name="saveMode" th:value="${saveMode}">
+				<input type="hidden" name="idx" th:value="${idx}">
+			</form>
+		</div>
+
+
+
+	</div>
+	
+	<br> <br> <br> <br> <br>
+	<br> <br> <br> <br> <br>
+	<br> <br> <br> <br> <br>  
+	<br> <br> <br> <br> <br>  
+	<br> <br> <br> <br> <br>  
+	<br> <br> <br> <br> <br>  
+	
+	<script type="application/javascript" src="/js/common.js"></script>
+	<script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
+	<script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/translations/ko.js"></script>
+	<script type="application/javascript" src="/common/js/plugins/ckeditor/ckeditor/config.js"></script>
+	<script type="application/javascript" src="/js/noticeWrite.js"></script>
+
+</body>
+
+</html>

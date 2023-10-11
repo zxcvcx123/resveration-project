@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"> 
+<!-- 타임리프사용해서 동적으로 값을 추가하거나 처리 한마디로 서버에 값을 불러오거나 매개변수 값 같은걸 추가하거나 처리가능-->
+<head>
+<meta charset="UTF-8">
+<title>예약하기</title>
+<link rel="stylesheet" type="text/css" href="/css/common.css">
+<link rel="stylesheet" type="text/css" href="/css/request.css">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+</head>
+<body>
+    <!-- content / form -->
+    <div class="content">
+		<div class="table_container">
+	        <form action="/request/requestdo" method="post">
+				<input type="hidden" name="saveMode" th:value="${saveMode}">
+				
+				<!-- saveMode = INSERT -->
+				<table th:if="${#lists.isEmpty(myData)}">
+					<tr>
+						<td>
+					        <p  class="title">예약하기</p>
+						</td>
+					</tr>
+	                <tr>
+	                    <td>예약자: </td>
+	                    <td><input type="text" name="name"></td>
+	                </tr>
+	                <tr>
+	                    <td>연락처: </td>
+	                    <td><input type="text" name="phone" placeholder="010-0000-0000"></td>
+	                </tr>
+	                <tr>
+	                    <td>인원수: </td>
+	                    <td><input type="text" name="count"> 명</td>
+	                </tr>
+	                <tr>
+	                    <td>예약일자: </td>
+	                    <td><input type="text" name="day" class="datepicker" value="" onchange="seletTime()" readonly></td>
+	                </tr>
+	                <tr>
+	                    <td>예약시간: </td>
+	                    <td>
+	                        <input type="hidden" name="time" id="time" value="" readonly
+	                            style="border: 0; background: whitesmoke; text-align: center; height: 30px; width: 120px;  font-size: 1.25rem;">
+	                        <a href="javascript:timeSelected()">선택</a>
+	                    </td>
+	                </tr>
+	                <tr>
+	                    <td>촬영종류: </td>
+	                    <td>
+	                         <input type="hidden" name="type" id="type" value="" readonly
+	                            style="border: 0; background: whitesmoke; text-align: center; height: 30px; width: 120px; font-size: 1.5rem;">
+	                        <a href="javascript:typeSelected()">선택</a>
+	                    </td>
+	                </tr>
+                </table>
+                <!-- saveMode = UPDATE -->
+	            <table th:each="myData :${myData}">
+					<tr>
+						<td>
+					        <p  class="title">예약하기</p>
+					        <input type="hidden" name="idx" th:value="${myData.idx}">
+						</td>
+					</tr>
+	                <tr>
+	                    <td>예약자: </td>
+	                    <td><input type="text" name="name" th:value="${myData.name}"></td>
+	                </tr>
+	                <tr>
+	                    <td>연락처: </td>
+	                    <td><input type="text" name="phone" placeholder="010-0000-0000" th:value="${myData.phone}"></td>
+	                </tr>
+	                <tr>
+	                    <td>인원수: </td>
+	                    <td><input type="text" name="count" th:value="${myData.count}"> 명</td>
+	                </tr>
+	                <tr>
+	                    <td>예약일자: </td>
+	                    <td><input type="text" name="day" class="datepicker" value="" th:value="${myData.day}"  onchange="seletTime()" readonly></td>
+	                </tr>
+	                <tr>
+	                    <td>예약시간: </td>
+	                    <td>
+	                        <input type="text" name="time" id="time" value="" th:value="${myData.time}" readonly
+	                            style="border: 0; background: whitesmoke; text-align: center; height: 30px; width: 120px;  font-size: 1.25rem;">
+	                        <a href="javascript:timeSelected()">선택</a>
+	                    </td>
+	                </tr>
+	                <tr>
+	                    <td>촬영종류: </td>
+	                    <td>
+	                        <input type="text" name="type" id="type" value="" th:value="${myData.type}" readonly
+	                            style="border: 0; background: whitesmoke; text-align: center; height: 30px; width: 120px; font-size: 1.5rem;">
+	                        <a href="javascript:typeSelected()">선택</a>
+	                    </td>
+	                </tr>
+                </table>
+                <table class="btn_table">
+					<tr>
+						<td>
+	              			<button type="submit">예약확정</button>
+	              		</td>
+						<td>
+	              			<button type="button" onclick="location.href='reservation'">닫기</button>
+	              		</td>
+	              	</tr>
+	        	</table>
+	        </form>
+		</div>
+    </div>
+    <!-- ========== display: none 영역 ========== -->
+    <!-- timeSelect / 시간 선택 화면 none -->
+    <div class="timeSelect" id="timeSelect" style="display: none;">
+        <div class="timeSelectBackground">
+            <table>
+                <tr class="timeSelectTitle">
+                    <td colspan="6">
+                        <p>오전 (AM)</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button type="button" class="timeBtn">09:00~09:30</button>
+                    </td>
+                    <td>
+                        <button type="button" class="timeBtn">09:30~10:00</button>
+                    </td>
+                    <td>
+                        <button type="button" class="timeBtn">10:00~10:30</button>
+                    </td>
+                    <td>
+                        <button type="button" class="timeBtn">10:30~11:00</button>
+                    </td>
+                    <td>
+                        <button type="button" class="timeBtn">11:00~11:30</button>
+                    </td>
+                    <td>
+                        <button type="button" class="timeBtn">11:30~12:00</button>
+                    </td>
+                </tr>
+                <tr class="timeSelectTitle">
+                    <td colspan="6">
+                        <p>오후 (PM)</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button type="button" class="timeBtn">13:00~13:00</button>
+                    </td>
+                    <td>
+                        <button type="button" class="timeBtn">13:00~13:30</button>
+                    </td>
+                    <td>
+                        <button type="button" class="timeBtn">13:30~14:00</button>
+                    </td>
+                    <td>
+                        <button type="button" class="timeBtn">14:00~14:30</button>
+                    </td>
+                    <td>
+                        <button type="button" class="timeBtn">14:30~15:00</button>
+                    </td>
+                    <td>
+                        <button type="button" class="timeBtn">15:00~15:30</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button type="button" class="timeBtn">15:30~16:00</button>
+                    </td>
+                    <td>
+                        <button type="button" class="timeBtn">16:00~16:30</button>
+                    </td>
+                    <td>
+                        <button type="button" class="timeBtn">16:30~17:00</button>
+                    </td>
+                    <td>
+                        <button type="button" class="timeBtn">17:30~18:00</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- 촬영 타입 -->
+    <div class="typeSelect" id="typeSelect" style="display: none;">
+        <div class="typeSelectBackground">
+            <table>
+                <tr class="typeTitle">
+                    <td>
+                        <p>선택해주세요!</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button type="button" class="typeBtn" value="증명사진">증명사진 (면허,여권,민증,반명함,명함판,비자)</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button type="button" class="typeBtn" value="가족사진">가족사진</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button type="button" class="typeBtn" value="우정사진">우정사진(2인)</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button type="button" class="typeBtn" value="단체사진">단체사진(3인 이상)</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button type="button" class="typeBtn" value="프로필사진">프로필사진</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button type="button" class="typeBtn" value="컬러증명사진">컬러증명사진</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <!-- ========== display: none 영역 끝 ========== -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<script src="/js/common.js"></script>
+<script src="/js/request.js"></script>
+<script th:inline="javascript">
+	let getData = /*[[${getDayTime}]]*/ㅇ;
+</script>
+</body>
+</html>

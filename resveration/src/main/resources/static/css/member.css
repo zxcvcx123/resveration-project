@@ -1,0 +1,79 @@
+*{
+	font-family: 'BMJUA';
+}
+
+.main_window {
+	width: 50%;
+	height: 800px;
+	border: 0px solid black;
+	margin: 5% auto;
+}
+
+.main_window .main_title {
+	font-size: 3rem;
+	margin-bottom: 3%;
+}
+
+.main_window .member_window {
+	font-size: 2rem;
+}
+
+.main_window .member_window input {
+	font-size: 1.5rem;
+}
+
+.main_window .member_window div {
+	margin-bottom: 5%;
+}
+
+/* 아이디 중복체크 버튼 */
+.main_window .member_window .id button {
+	margin-left: 5%;
+	height: 30px; width: 80px;
+	border: 1px solid black;
+	font-size: 1.15rem;
+}
+.main_window .member_window .id button:hover {
+	cursor: pointer;
+	background: lightskyblue;
+}
+
+.main_window .member_window .phone input {
+	
+}
+
+.main_window .member_window .email input {
+	width: 20%;
+}
+.main_window .member_window .email select {
+	font-size: 1.5rem;
+}
+
+.main_window .member_window .join {
+	width: 40%;
+	display: flex;
+	justify-content: space-between;
+}
+
+.main_window .member_window .join button {
+	color: lightskyblue;
+	margin-top: 5%;
+	font-size: 2.5rem;
+}
+
+.main_window .member_window .join button:last-child {
+	color: lightskyblue;
+}
+
+
+.main_window .member_window .join button:hover {
+	cursor: pointer;
+	color: lightskyblue;
+	border-bottom: 3px solid lightskyblue;
+}
+
+.main_window .member_window .checkFont {
+	font-size: 1.25rem;
+	color: red;
+	display: none;
+}
