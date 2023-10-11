@@ -271,7 +271,8 @@ public class MainController {
 		
 		// 전체 게시물 수량
 		String field = pageDto.getField();
-		Integer totalList = mainService.noticeTotal(field);
+		String keyword = pageDto.getKeyword();
+		Integer totalList = mainService.noticeTotal(field, keyword);
 
 		// 나눌 페이지 수
 		Integer slicePage = pageDto.getSlicePage();

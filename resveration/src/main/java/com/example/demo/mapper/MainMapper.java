@@ -69,5 +69,5 @@ public interface MainMapper {
 	List<NoticeDTO> getNoticeList(PageDTO pageDto) throws SQLException;
 	
 	/* total 게시글 수 */
-	Integer noticeTotal(String field);
+	Integer noticeTotal(String field, String keyword);
 }

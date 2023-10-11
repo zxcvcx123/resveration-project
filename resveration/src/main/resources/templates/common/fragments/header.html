@@ -20,7 +20,13 @@
         </ul>
         <!-- login_Menu / 로그인 메뉴 -->
         <ul class="login_Menu">
-            <li><a href="/login" th:if="${username != ''}">로그아웃</a></li>
+			<th:block th:if="${role != 'outSide'}">
+            	<li><a href="/logout">로그아웃</a></li>
+            </th:block>
+            <th:block th:if="${role == 'outSide'}">
+            	<li><a href="/logout">로그인</a></li>
+            </th:block>
+
         </ul>
     </div>
     

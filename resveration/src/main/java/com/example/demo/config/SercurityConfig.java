@@ -14,6 +14,8 @@ import org.springframework.security.web.access.expression.WebExpressionAuthoriza
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.util.AntPathMatcher;
 
+import jakarta.servlet.http.HttpSession;
+
 
 //시큐리티 핵심 기능들을 컨트롤 하는 클래스
 @Configuration
@@ -53,7 +55,24 @@ public class SercurityConfig {
 		.loginPage("/login") // 기본 로그인 페이지말고 내가 지정한 로그인 페이지로 이동 loginPage("매핑주소") / disable() 로그인 페이지로 이동 x
 		.loginProcessingUrl("/loginDo") // /login 주소가 호출이 되면 시큐리티가 낚아채서 대신 로그인을 진행 해준다. *컨트롤러에서 login을 따로 안만들어도 된다.
 		.defaultSuccessUrl("/home"); //로그인 성공시 기본적으로 이동하는 url을 설정
-		return http.build();
+		 
+		http.logout()
+			.logoutUrl("/logout")//로그아웃 처리 URL ( = from action url)
+			.logoutSuccessUrl("/login") //로그아웃 성공 후 targetUrl, logoutSuccessHandler가 있다면 효과 없으므로 주석처리.
+			.addLogoutHandler((request, response, authentication) -> {
+				//굳이 내가 세션 무효화하지 않아도 됨.
+				//LogoutFilter가 내부적으로 처리
+				HttpSession session = request.getSession();
+				if(session != null) {
+					session.invalidate();
+				}
+			}) //로그아웃 핸들러 추가
+			
+			.logoutSuccessHandler((request, respone, authentication)-> {
+				respone.sendRedirect("/login");
+			}) // 로그아웃 성공핸들러
+			.deleteCookies("remember-me");
+			return http.build();
 	}
 	
 }

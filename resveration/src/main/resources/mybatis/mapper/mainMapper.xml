@@ -222,18 +222,30 @@ resultType 및 parameterType 관련 꿀팁
 	
 		<if test="field == '전체'">
 			SELECT COUNT(*) FROM notice;
+			<if test="keyword != null">
+				WHERE LIKE CONCAT('%',#{keyword},'%') 
+			</if>
 		</if>
 		
 		<if test="field == '공지'">
 			SELECT COUNT(*) FROM notice WHERE type = #{field}
+			<if test="keyword != null">
+				OR LIKE CONCAT('%',#{keyword},'%') 
+			</if>
 		</if>
 		
 		<if test="field == '잡담'">
 			SELECT COUNT(*) FROM notice WHERE type = #{field}
+			<if test="keyword != null">
+				OR LIKE CONCAT('%',#{keyword},'%')
+			</if>
 		</if>
 		
 		<if test="field == '문의'">
 			SELECT COUNT(*) FROM notice WHERE type = #{field}
+			<if test="keyword != null">
+				OR LIKE CONCAT('%',#{keyword},'%')
+			</if>
 		</if>
 		
 	</select>
