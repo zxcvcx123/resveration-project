@@ -22,14 +22,14 @@
 		<div class="searchBar">
 			<div>
 				<select id="searchField" name="field">
-					<option value="전체" selected>전체</option>
-					<option value="공지">공지사항</option>
-					<option value="잡담">잡담</option>
-					<option value="문의">문의</option>
+					<option value="전체" selected th:selected="${field == '전체'}">전체</option>
+					<option value="공지" th:selected="${field == '공지'}">공지사항</option>
+					<option value="잡담" th:selected="${field == '잡담'}">잡담</option>
+					<option value="문의" th:selected="${field == '문의'}">문의</option>
 				</select>
 			</div>
 			<div>
-				<input id="searchKeyword" type="text" placeholder="제목을 입력해주세요." name="keywored">
+				<input id="searchKeyword" type="text" placeholder="제목을 입력해주세요." name="keywored" th:value="${keyword}">
 			</div>
 			<div>
 				<a href="javascript:void(0);" onclick="searchBtn()">검색</a>
@@ -46,30 +46,8 @@
 					<a href="/noticeWrite?saveMode=INSERT">글 쓰기</a>
 				</div>
 			</div>
-			<table class="main_Table" th:if="${role != 'admin'}">
-				<thead>
-					<tr>
-						<th style="display: none;">글 번호</th>
-						<th>글 타입</th>
-						<th>제목</th>
-						<th>작성자</th>
-						<th>작성시간</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:each="list, listStat: ${list}">
-						<td th:text="${list.idx}" style="display: none;"></td>
-						<td th:text="${list.type}"></td>
-						<td><a th:href="@{/notice/{idx}(idx= ${list.idx})}" th:text="${list.title}"></a></td>
-						<td
-							th:text="${#strings.substring(list.writer, 0, 1)} + ${#strings.repeat('*', #strings.length(list.writer) - 1)}">
-						</td>
-						<td th:text="${list.date}"></td>
-					</tr>
-				</tbody>
-			</table>
 
-			<table class="main_Table" th:if="${role == 'admin'}">
+			<table class="main_Table">
 				<thead>
 					<tr>
 						<th style="display: none;">글 번호</th>
@@ -92,37 +70,58 @@
 
 			<!--페이징처리-->
 			<div class="paging_Area">
+				
+				<!-- <<처음 영역 -->
+				<th:block th:if="${field != null && keyword != null}">
+					<a th:href="@{/notice(field = ${field},keyword = ${keyword}, page = 1)}"><< 처음</a>
+				</th:block>
+				<th:block th:if="${field != null && keyword == null}">
+					<a th:href="@{/notice(field = ${field}, page = 1)}"><< 처음</a>
+				</th:block>
+				<th:block th:if="${field == null && keyword == null}">
+					<a th:href="@{/notice(field = '전체', page = 1)}"><< 처음</a>
+				</th:block>
 
-				<a th:href="@{/notice?page=1}">
-					<< 처음</a>
+				&nbsp;
+				&nbsp;
+				
+				<!-- <이전 영역 -->
+				<th:block th:if="${nowPage > 10}">
+					<a th:if="${field != null && keyword != null}" th:href="@{/notice(field = ${field},keyword = ${keyword}, page = ${startPage - 10})}">< 이전</a>
+					<a th:if="${field != null && keyword == null}" th:href="@{/notice(field = ${field}, page = ${startPage - 10})}">< 이전</a>
+					<a th:if="${field == null && keyword == null}" th:href="@{/notice(field = '전체', page = ${startPage - 10})}">< 이전</a>
+				</th:block>
 
-						&nbsp;
-						&nbsp;
+				&nbsp;
+				&nbsp;
+				
+				<!-- 메인 페이징 번호 영역 -->
+				<th:block th:each="num : ${#numbers.sequence(startPage, endPage)}">
+					<a th:href="@{/notice(page = ${num})}" th:text="${num}" th:style="${nowPage == num?'color: red':'color:'}"></a>
+				</th:block>
 
-						<th:block th:if="${nowPage > 10}">
-							<a th:href="@{/notice(page = ${startPage - 10})}">
-								< 이전</a>
-						</th:block>
+				&nbsp;
+				
+				<!-- 다음> 영역 -->
+				<th:block th:if="${lastPage >= endPage + 1}">
+					<a th:if="${field != null && keyword != null}" th:href="@{/notice(field = ${field}, keyword = ${keyword}, page = ${endPage+1})}"> 다음 ></a>
+					<a th:if="${field != null && keyword == null}" th:href="@{/notice(field = '전체', page = ${endPage+1})}"> 다음 ></a>
+					<a th:if="${field == null && keyword == null}" th:href="@{/notice(field = '전체', page = ${endPage+1})}"> 다음 ></a>
+				</th:block>
 
-						&nbsp;
-
-						<th:block th:each="num : ${#numbers.sequence(startPage, endPage)}">
-
-							<a th:href="@{/notice(page = ${num})}" th:text="${num}"
-								th:style="${nowPage == num?'color: red':'color:'}"></a>
-
-						</th:block>
-
-						&nbsp;
-
-						<th:block th:if="${lastPage >= endPage + 1}">
-							<a th:href="@{/notice(page = ${endPage+1})}"> 다음 ></a>
-						</th:block>
-
-						&nbsp;
-						&nbsp;
-
-						<a th:href="@{/notice(page = ${lastPage})}">끝 >></a>
+				&nbsp;
+				
+				<!-- 끝>> 영역 -->
+				<th:block th:if="${field != null && keyword != null}">
+					<a th:href="@{/notice(field = ${field},keyword = ${keyword}, page = ${lastPage})}">끝 >></a>
+				</th:block>
+				<th:block th:if="${field != null && keyword == null}">
+					<a th:href="@{/notice(field = ${field}, page = ${lastPage})}">끝 >></a>
+				</th:block>
+				<th:block th:if="${field == null && keyword == null}">
+					<a th:href="@{/notice(field = '전체', page = ${lastPage})}">끝 >></a>
+				</th:block>
+				
 
 			</div>
 		</div>
@@ -133,10 +132,10 @@
 	<br> <br> <br> <br> <br> <br>
 	<br> <br> <br> <br> <br> <br>
 	<br> <br> <br> <br> <br> <br>
-	
+
 	<script src="/js/common.js"></script>
 	<script src="/js/notice.js"></script>
-	
+
 </body>
 
 </html>

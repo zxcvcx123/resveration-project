@@ -32,6 +32,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.auth.PrincipalDetails;
 import com.example.demo.dto.BoardDTO;
@@ -250,7 +251,10 @@ public class MainController {
 
 	/* ===== 게시판(공지, 자유, 문의사항 등등) ===== */
 	@GetMapping("/notice")
-	public String notice(PageDTO pageDto, @AuthenticationPrincipal PrincipalDetails principalDetails, Model model) throws SQLException {
+	public String notice(PageDTO pageDto, 
+						@AuthenticationPrincipal PrincipalDetails principalDetails, 
+						Model model,
+						RedirectAttributes rttr) throws SQLException {
 
 		// 유저 권한 확인 (admin => 작성자 이름 다보임 , guest => 작성자 이름 가려짐)
 		if (principalDetails == null) {
@@ -270,9 +274,11 @@ public class MainController {
 		List<NoticeDTO> getNoticeList = mainService.getNoticeList(pageDto);
 		
 		// 전체 게시물 수량
-		String field = pageDto.getField();
-		String keyword = pageDto.getKeyword();
-		Integer totalList = mainService.noticeTotal(field, keyword);
+		
+		System.out.println("@@@@@@@@@@@@@@@@field: " + pageDto.getField());
+		System.out.println("@@@@@@@@@@@@@@@@keyword: " + pageDto.getKeyword());
+		
+		Integer totalList = mainService.noticeTotal(pageDto);
 
 		// 나눌 페이지 수
 		Integer slicePage = pageDto.getSlicePage();
@@ -299,10 +305,7 @@ public class MainController {
 		
 		// 마지막 페이지 번호 이후 안나오게 해야해서 min으로 처리
 		endPage = Math.min(endPage, lastPage);
-		
-
-		System.out.println("@@@@@@@@@@@@@@@@field: " + pageDto.getField());
-		System.out.println("@@@@@@@@@@@@@@@@keyword: " + pageDto.getKeyword());
+	
 		
 		model.addAttribute("list", getNoticeList); // 게시물
 		model.addAttribute("totalList", totalList); // 총 게시물 수
@@ -311,7 +314,9 @@ public class MainController {
 		model.addAttribute("endPage", endPage); // 페이지 끝점
 		model.addAttribute("nowPage", nowPage); // 현재 페이지
 		model.addAttribute("lastPage", lastPage); // 마지막 페이지
-
+		model.addAttribute("field", pageDto.getField()); //게시판 타입
+		model.addAttribute("keyword", pageDto.getKeyword()); // 검색어
+		
 		return "notice";
 	}
 

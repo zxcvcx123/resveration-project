@@ -210,8 +210,8 @@ public class MainService {
 	}
 
 	/* ===== 게시판 글 Total 개수 ===== */
-	public Integer noticeTotal(String field, String keyword) {
+	public Integer noticeTotal(PageDTO pageDto) {
 		
-		return mainMapper.noticeTotal(field, keyword);
+		return mainMapper.noticeTotal(pageDto);
 	}
 }
