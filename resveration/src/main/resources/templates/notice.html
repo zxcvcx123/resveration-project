@@ -97,7 +97,9 @@
 				
 				<!-- 메인 페이징 번호 영역 -->
 				<th:block th:each="num : ${#numbers.sequence(startPage, endPage)}">
-					<a th:href="@{/notice(page = ${num})}" th:text="${num}" th:style="${nowPage == num?'color: red':'color:'}"></a>
+					<a th:if="${field != null && keyword != null}" th:href="@{/notice(field = ${field}, keyword = ${keyword}, page = ${num})}" th:text="${num}" th:style="${nowPage == num?'color: red':'color:'}"></a>
+					<a th:if="${field != null && keyword == null}" th:href="@{/notice(field = ${field}, page = ${num})}" th:text="${num}" th:style="${nowPage == num?'color: red':'color:'}"></a>
+					<a th:if="${field == null && keyword == null}" th:href="@{/notice(field = '전체', page = ${num})}" th:text="${num}" th:style="${nowPage == num?'color: red':'color:'}"></a>
 				</th:block>
 
 				&nbsp;
@@ -105,7 +107,7 @@
 				<!-- 다음> 영역 -->
 				<th:block th:if="${lastPage >= endPage + 1}">
 					<a th:if="${field != null && keyword != null}" th:href="@{/notice(field = ${field}, keyword = ${keyword}, page = ${endPage+1})}"> 다음 ></a>
-					<a th:if="${field != null && keyword == null}" th:href="@{/notice(field = '전체', page = ${endPage+1})}"> 다음 ></a>
+					<a th:if="${field != null && keyword == null}" th:href="@{/notice(field = ${field}, page = ${endPage+1})}"> 다음 ></a>
 					<a th:if="${field == null && keyword == null}" th:href="@{/notice(field = '전체', page = ${endPage+1})}"> 다음 ></a>
 				</th:block>
 
