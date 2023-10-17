@@ -56,7 +56,7 @@
 						<td><textarea cols="5" name="content" th:text="${notice.content}"></textarea></td>
 					</tr>
 				</table>
-				<div class="btns" th:if=${role != 'outSide' && role == 'admin'})>
+				<div class="btns">
 					<button type="submit">작성</button>
 					<button type="button" onclick="location.href='/notice'">취소</button>
 				</div>

@@ -36,14 +36,18 @@
 			</div>
 		</div>
 
-
 		<!-- 게시글 table -->
 		<div class="content_Table">
 
 			<div class="table_Header">
 				<span class="total" th:text="'Total '+ ${totalList}+ '건'"></span>
 				<div class="writeBtn">
-					<a href="/noticeWrite?saveMode=INSERT">글 쓰기</a>
+					<th:block th:if="${role != 'outSide'}">
+						<a href="/noticeWrite?saveMode=INSERT">글 쓰기</a>
+					</th:block>
+					<th:block th:if="${role == 'outSide'}">
+						<a href="/login">글 쓰기</a>
+					</th:block>
 				</div>
 			</div>
 
@@ -62,7 +66,14 @@
 						<td th:text="${list.idx}" style="display: none;"></td>
 						<td th:text="${list.type}"></td>
 						<td><a th:href="@{/notice/{idx}(idx= ${list.idx})}" th:text="${list.title}"></a></td>
-						<td th:text="${list.writer}"></td>
+						<th:block th:if="${role != 'admin' && list.writerid != userId}">
+							<td
+								th:text="${#strings.substring(list.writer, 0, 1)} + ${#strings.repeat('*', #strings.length(list.writer) - 1)}">
+							</td>
+						</th:block>
+						<th:block th:if="${role == 'admin' || list.writerid == userId}">
+							<td th:text="${list.writer}"></td>
+						</th:block>
 						<td th:text="${list.date}"></td>
 					</tr>
 				</tbody>

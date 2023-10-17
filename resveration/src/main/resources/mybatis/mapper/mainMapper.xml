@@ -213,7 +213,7 @@ resultType 및 parameterType 관련 꿀팁
 		
 	</select>
 	
-	<!-- 게시판 글 총 개수 -->
+	<!-- 게시글 총 개수 -->
 	<select id="noticeTotal" resultType="Integer">
 	
 		<if test="field == null">
@@ -247,7 +247,46 @@ resultType 및 parameterType 관련 꿀팁
 				AND title LIKE CONCAT('%',#{keyword},'%') 
 			</if>
 		</if>
-		
+	</select>
+	
+	<insert id="commentWrite" parameterType="com.example.demo.dto.CommentDTO">
+		INSERT INTO comment
+		(
+			notice_idx,
+			comment,
+			writer,
+			writerid,
+			modifydate
+		)
+		VALUE 
+		(
+			#{notice_idx},
+			#{comment},
+			#{writer},
+			#{writerid},
+			#{modifydate}
+		)
+	</insert>
+	
+	<select id="getComment" resultType="HashMap">
+		SELECT n.idx, 
+				n.type, 
+				n.title, 
+				n.content, 
+				n.writer, 
+				n.writerid, 
+				n.date, 
+				n.modifydate, 
+				c.idx AS cidx, 
+				c.notice_idx, 
+				c.comment, 
+				c.writer AS cwriter, 
+				c.writerid AS cwriterid, 
+				c.date AS cdate, 
+				c.modifydate AS cmodifydate 
+		FROM notice n JOIN  comment c
+			ON n.idx = c.notice_idx
+		WHERE n.idx = #{idx};
 	</select>
 
 </mapper>

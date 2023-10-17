@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.auth.PrincipalDetails;
 import com.example.demo.dto.BoardDTO;
+import com.example.demo.dto.CommentDTO;
 import com.example.demo.dto.NoticeDTO;
 import com.example.demo.dto.PageDTO;
 import com.example.demo.dto.UserDTO;
@@ -29,7 +30,8 @@ public class MainService {
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-	/* ===== 회원가입 ===== */
+
+	/*회원가입 */
 	public boolean memberDo(UserDTO user) {
 
 		/* 시큐리티 암호변환 기능을 위해 암호 입력된 값을 가져오고 */
@@ -54,14 +56,14 @@ public class MainService {
 		return true;
 	};
 
-	/* ===== 아이디 중복확인 ===== */
+	/*  아이디 중복확인 */
 	public String checkId(String checkId) {
 		System.out.println("@@@@ 들어가는중: " + checkId);
 		System.out.println("@@@@ 나오는중: " + mainMapper.checkId(checkId));
 		return mainMapper.checkId(checkId);
 	}
 
-	/* ===== 예약저장 ===== */
+	/* 예약저장*/
 	public void requestdo(BoardDTO boardDTO, @AuthenticationPrincipal PrincipalDetails principalDetails) {
 
 		/* 작성자 ID */
@@ -144,36 +146,37 @@ public class MainService {
 
 	}
 
-	/* ===== 전체 예약한 일자 가져오기 ===== */
+	/* 전체 예약한 일자 가져오기 */
 	public List<String> getDay() {
 		return mainMapper.getDay();
 	}
-
+	
+	/* 예약일에 어떤 시간에 예약되어있는지 */
 	public List<String> getDayTime() {
 		return mainMapper.getDayTime();
 	}
 
-	/* ===== 해당 일자에 예약정보 가져오기 ===== */
+	/* 해당 일자에 예약정보 가져오기 */
 	public List<BoardDTO> getReservation(String date) {
 		return mainMapper.getReservation(date);
 	}
 
-	/* ===== 내 예약현황 가져오기 ===== */
+	/* 내 예약현황 가져오기 */
 	public List<BoardDTO> getMyReservation(String userId) {
 		return mainMapper.getMyReservation(userId);
 	}
 
-	/* ===== 내가 예약한 정보 수정하기 ===== */
+	/* 내가 예약한 정보 수정하기 */
 	public List<BoardDTO> getMyReservationUPDATE(String idx) {
 		return mainMapper.getMyReservationUPDATE(idx);
 	}
 
-	/* ===== 예약 취소 기능 ===== */
+	/* 예약 취소 기능 */
 	public boolean deleteMyReservation(String idx) {
 		return mainMapper.deleteMyReservation(idx);
 	}
 
-	/* ===== 게시판 글쓰기 기능 ===== */
+	/* 게시판 글쓰기 기능 */
 	public void noticeWriteDo(NoticeDTO notice) {
 		LocalDateTime today = LocalDateTime.now();
 
@@ -184,12 +187,12 @@ public class MainService {
 
 	}
 
-	/* ===== 특정(idx기준) 게시글 내용 가져오기 ===== */
+	/* 특정(idx기준) 게시글 내용 가져오기 */
 	public Map<String, Object> getIdxNotice(String idx) {
 		return mainMapper.getIdxNotice(idx);
 	}
 
-	/* ===== 게시판 글 업데이트 ===== */
+	/* 게시판 글 업데이트 */
 	public void noticeUpdate(NoticeDTO notice) {
 
 		LocalDateTime today = LocalDateTime.now();
@@ -197,21 +200,38 @@ public class MainService {
 		mainMapper.noticeUpdate(notice);
 	}
 
-	/* ===== 게시판 글 삭제 ===== */
+	/* 게시판 글 삭제  */
 	public void noticeDelete(String idx) {
 		mainMapper.noticeDelete(idx);
 	}
 
 	/* ===== 페이징 처리 관련 ===== */
-	/* ===== 게시판 글 목록 가져오기 ===== */
+	/* 게시판 글 목록 가져오기 */
 	public List<NoticeDTO> getNoticeList(PageDTO pageDto) throws SQLException {
 		
 		return mainMapper.getNoticeList(pageDto);
 	}
 
-	/* ===== 게시판 글 Total 개수 ===== */
+	/* 게시판 글 Total 개수 */
 	public Integer noticeTotal(PageDTO pageDto) {
 		
 		return mainMapper.noticeTotal(pageDto);
+	}
+	
+	/* ===== 댓글 관련 ===== */
+	/* 댓글 쓰기 */
+	public void commentWrite(CommentDTO comment, Integer idx, String writerid, String writer) {
+		
+		comment.setNotice_idx(idx);
+		comment.setWriter(writer);
+		comment.setWriterid(writerid);
+		
+		
+		mainMapper.commentWrite(comment);
+	}
+	
+	/* 댓글 가져오기 */
+	public List<Map<String, Object>> getComment(String idx){
+		return mainMapper.getComment(idx);
 	}
 }

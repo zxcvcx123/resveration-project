@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -36,17 +37,25 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.auth.PrincipalDetails;
 import com.example.demo.dto.BoardDTO;
+import com.example.demo.dto.CommentDTO;
 import com.example.demo.dto.NoticeDTO;
 import com.example.demo.dto.PageDTO;
 import com.example.demo.dto.UserDTO;
 import com.example.demo.service.MainService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import lombok.RequiredArgsConstructor;
+
 @Controller
+@RequiredArgsConstructor // final 필드를 아규먼트로 받는 생성자 만들어주는 lombok 어노테이션
 public class MainController {
 
-	@Autowired
-	private MainService mainService;
+	//필드 주입방법
+	//@Autowired
+	//private MainService mainService;
+	
+	// final과 lombok의 @RequiredArgsConstructor 활용한 불변한 생성자 주입 방법
+	private final MainService mainService;
 
 	/* ===== login 페이지 ===== */
 	@GetMapping("/login")
@@ -253,15 +262,17 @@ public class MainController {
 	@GetMapping("/notice")
 	public String notice(PageDTO pageDto, 
 						@AuthenticationPrincipal PrincipalDetails principalDetails, 
-						Model model,
-						RedirectAttributes rttr) throws SQLException {
+						Model model) throws SQLException {
 
 		// 유저 권한 확인 (admin => 작성자 이름 다보임 , guest => 작성자 이름 가려짐)
 		if (principalDetails == null) {
 			String role = "outSide";
 			model.addAttribute("role", role);
 		} else {
+			model.addAttribute("userId", principalDetails.getUserid());
 			model.addAttribute("role", principalDetails.getUserRole());
+			
+			System.out.println("@@@@@@@@@@@@@@접속자 ID: " + principalDetails.getUserid());
 		}
 
 		/* 페이징 처리 관련 부분 시작 */
@@ -306,6 +317,7 @@ public class MainController {
 		// 마지막 페이지 번호 이후 안나오게 해야해서 min으로 처리
 		endPage = Math.min(endPage, lastPage);
 	
+		
 		
 		model.addAttribute("list", getNoticeList); // 게시물
 		model.addAttribute("totalList", totalList); // 총 게시물 수
@@ -372,9 +384,28 @@ public class MainController {
 
 	/* ===== 게시판 글 내용보기 ===== */
 	@GetMapping("/notice/{idx}")
-	public String noticePage(@PathVariable("idx") String idx, Model model) {
+	public String noticePage(@PathVariable("idx") String idx, 
+							@AuthenticationPrincipal PrincipalDetails principalDetails,
+							Model model) {
+		
+
+		// 유저 권한 확인 (admin => 작성자 이름 다보임 , guest => 작성자 이름 가려짐)
+		if (principalDetails == null) {
+			String role = "outSide";
+			String userId = "oS";
+			
+			model.addAttribute("userId", userId);
+			model.addAttribute("role", role);
+		} else {
+			model.addAttribute("role", principalDetails.getUserRole());
+			model.addAttribute("userId", principalDetails.getUserid());
+		}
 		
 		Map<String, Object> getIdxNotice = mainService.getIdxNotice(idx);
+		
+		List<Map<String, Object>> getComment = mainService.getComment(idx);
+		
+		model.addAttribute("comment", getComment);
 		model.addAttribute("notice", getIdxNotice);
 		
 		return "noticePage";
@@ -391,5 +422,22 @@ public class MainController {
 
 		return "redirect:/notice";
 	}
+	
+	/* ===== 댓글 작성하기 ===== */
+	@PostMapping("/notice/{idx}/comment")
+	@ResponseBody
+	public void commentWrite(@PathVariable("idx") Integer idx, 
+							@AuthenticationPrincipal PrincipalDetails principalDetails,
+							@RequestBody CommentDTO commentDto) {
+		
+		String writerid = principalDetails.getUserid();
+		String writer = principalDetails.getUsername();
+		
+		mainService.commentWrite(commentDto, idx, writerid, writer);
+		
+	}
+	
+	
+	
 
 }

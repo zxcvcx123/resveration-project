@@ -5,7 +5,7 @@
 /* 글쓰기 전체 div */
 .total_Window {
 	width: 100%;
-	height: 500px;
+	height: 600px;
 	border: 0px solid black;
 	margin-top: 7%;
 }
@@ -18,12 +18,12 @@
 /* 글쓰기 form 영역 */
 .form_Window {
 	width: 100%;
-	height: 500px;
+	height: 100%;
 	border: 1px solid black;
 	display: flex;
 	justify-content: space-between;
 	font-size: 2.8rem;
-	line-height: 100px;
+	line-height: 100%;
 	margin-top: 3%;
 }
 
@@ -103,4 +103,85 @@
 .form_Window .btns button:hover {
 	cursor: pointer;
 	background-color: lightskyblue;
+}
+
+/* 댓글 영역 comment_Area */
+.comment_Area {
+	margin-top: 12%;
+	height: 100%;
+}
+.comment_Area > h3{
+	font-size: 2.5rem;
+}
+
+/* 댓글 작성 영역 */
+.comment_Area .comment_From {
+	width: 100%;
+	height: 80px;
+	border: 2px solid black;
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+	border-radius: 10px;
+	background: #f2edff;
+
+}
+.comment_Area .comment_From > input {
+	width: 1050px;
+	height: 60px;
+	line-height: 100%;
+	text-indent: 1%;
+	font-size: 2rem;
+	border-radius: 10px;
+}
+.comment_Area .comment_From > input:hover{
+	background: #d1d1d1;
+}
+
+.comment_Area .comment_From > button {
+	font-size: 1.5rem;
+	border: 2px solid black;
+	padding-left: 15px;
+	padding-right: 15px;
+	padding-top: 17.6px;
+	padding-bottom: 17.6px;
+	border-radius: 8px;
+	margin-left: 1.2%;
+	background: white;
+}
+
+.comment_Area .comment_From > button:hover {
+	cursor: pointer;
+	background: #d1d1d1;
+}
+
+/* 댓글 내용 영역 */
+.comment_View {
+	width: 100%;
+	height: 100%;
+	border: 2px solid black;
+	margin-top: 2%;
+	border-radius: 8px;
+}
+
+.comment_View .comment_outLine {
+	
+	border-bottom: 2px solid black;
+	border-radius: 0px;
+	
+}
+
+.comment_View .comment_outLine:last-child {
+	
+	border-bottom: 0px solid black;
+	border-radius: 0px;
+	
+}
+
+.comment_View .comment_id {
+	font-size: 1.25rem;
+}
+
+.comment_View .comment_content {
+	font-size: 2rem;
 }

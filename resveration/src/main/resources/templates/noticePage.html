@@ -18,7 +18,7 @@
 	</header>
 
 	<div class="total_Window">
-		<h3>글쓰기</h3>
+		<h3>내용</h3>
 
 		<!-- form 영역 -->
 		<div class="form_Window">
@@ -37,18 +37,39 @@
 						<td th:text="${notice.content}"></td>
 					</tr>
 				</table>
-				<div class="btns">
+				<div class="btns" th:if="${notice.writerid == userId || role == 'admin'}">
 					<button type="button" onclick="modiBtn()">수정</button>
 					<button type="button" onclick="deleteBtn()">삭제</button>
 				</div>
 				<input type="hidden" name="idx" th:value="${idx}">
 			</form>
 		</div>
-
-
-
 	</div>
 	
+	<div class="comment_Area">
+		<!-- 댓글 타이틀 -->
+		<h3>댓글</h3>
+		<div class="comment_From">
+			<input type="text" id="comment" maxlength="100" placeholder="댓글을 입력해주세요 100자 이하">
+			<button type="button" onclick="commentSubmit()">작성하기</button>
+		</div>
+		
+		
+			
+		<div class="comment_View">
+			<div th:each="comment: ${comment}" class="comment_outLine">
+				<div class="comment_id">
+					<span th:text="${comment.cwriter}"></span>
+				</div>
+				<div class="comment_content">
+					<span th:text="${comment.comment}"></span>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+	
 	<br> <br> <br> <br> <br>
 	<br> <br> <br> <br> <br>
 	<br> <br> <br> <br> <br>  
@@ -56,6 +77,9 @@
 	<br> <br> <br> <br> <br>  
 	<br> <br> <br> <br> <br>  
 	
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-serialize-object/2.5.0/jquery.serialize-object.min.js" integrity="sha512-Gn0tSSjkIGAkaZQWjx3Ctl/0dVJuTmjW/f9QyB302kFjU4uTNP4HtA32U2qXs/TRlEsK5CoEqMEMs7LnzLOBsA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 	<script type="application/javascript" src="/js/common.js"></script>
 	<script type="application/javascript" src="/js/noticePage.js"></script>
 

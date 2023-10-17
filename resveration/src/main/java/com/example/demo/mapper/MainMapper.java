@@ -9,6 +9,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.example.demo.dto.BoardDTO;
+import com.example.demo.dto.CommentDTO;
 import com.example.demo.dto.NoticeDTO;
 import com.example.demo.dto.PageDTO;
 import com.example.demo.dto.UserDTO;
@@ -70,4 +71,13 @@ public interface MainMapper {
 	
 	/* total 게시글 수 */
 	Integer noticeTotal(PageDTO pageDto);
+	
+	/* === 댓글 관련 === */
+	
+	/* 댓글 작성 */
+	void commentWrite(CommentDTO comment);
+	
+	/* 댓글 가져오기 */
+	List<Map<String, Object>>getComment(String idx);
+	
 }
