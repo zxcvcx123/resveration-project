@@ -159,29 +159,35 @@
 .comment_View {
 	width: 100%;
 	height: 100%;
-	border: 2px solid black;
+	border: 0px solid black;
 	margin-top: 2%;
 	border-radius: 8px;
 }
 
-.comment_View .comment_outLine {
+
+
+.comment_outLine {
 	
 	border-bottom: 2px solid black;
 	border-radius: 0px;
 	
 }
 
-.comment_View .comment_outLine:last-child {
+.comment_outLine:last-child {
 	
-	border-bottom: 0px solid black;
+	border-bottom: 2px solid black;
 	border-radius: 0px;
 	
 }
 
-.comment_View .comment_id {
-	font-size: 1.25rem;
+.comment_id {
+	font-size: 1.1rem;
+	margin-top: 1%;
 }
 
-.comment_View .comment_content {
+.comment_content {
 	font-size: 2rem;
+	margin-top: 0.5%;
+	margin-bottom: 0.5%;
 }
+

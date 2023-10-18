@@ -425,8 +425,7 @@ public class MainController {
 	
 	/* ===== 댓글 작성하기 ===== */
 	@PostMapping("/notice/{idx}/comment")
-	@ResponseBody
-	public void commentWrite(@PathVariable("idx") Integer idx, 
+	public ResponseEntity<?> commentWrite(@PathVariable("idx") Integer idx, 
 							@AuthenticationPrincipal PrincipalDetails principalDetails,
 							@RequestBody CommentDTO commentDto) {
 		
@@ -434,6 +433,12 @@ public class MainController {
 		String writer = principalDetails.getUsername();
 		
 		mainService.commentWrite(commentDto, idx, writerid, writer);
+		
+		List<Map<String, Object>> result = mainService.getComment(String.valueOf(idx));
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
+		
+		return new ResponseEntity<>(result, headers, HttpStatus.OK);
 		
 	}
 	
