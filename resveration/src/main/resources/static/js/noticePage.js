@@ -41,24 +41,15 @@ function commentSubmit() {
 			contentType: 'application/json; charset=utf-8',
 			success: function(result) {
 				alert("댓글 작성이 완료 되었습니다.");
-			
-				
-				
-				
-				for(i=0; i<result.length; i++){
-					
-					if(i == result.length-1){
-						userName = result[i].cwriter;
-						content = result[i].comment;
-						let text = "<div class='comment_outLine'><div class='comment_id'><span>" + userName + 
-							"</span></div> <div class='comment_content'><span>"+ content + 
-							"</span></div></div>";
-						cv[0].insertAdjacentHTML("beforeend", text);
-						document.getElementById('comment').value = "";
-					} 
-	
-					
-				}
+
+				userName = result[0].cwriter;
+				content = result[0].comment;
+				let text = "<div class='comment_outLine'><div class='comment_id'><span>" + userName + 
+					"</span></div> <div class='comment_content'><span>"+ content + 
+					"</span></div></div>";
+				cv[0].insertAdjacentHTML("afterbegin", text);
+				document.getElementById('comment').value = "";
+
 				
 			},
 			error: function() {
@@ -66,7 +57,7 @@ function commentSubmit() {
 			}
 		})
 		
-		, 1500);
+		, 1000);
 		
 	}
 }

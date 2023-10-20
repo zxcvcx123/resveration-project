@@ -25,7 +25,7 @@ resultType 및 parameterType 관련 꿀팁
 	 <insert id="memberDo" parameterType="com.example.demo.dto.UserDTO">
 	 	INSERT INTO
 	 		user(
-	 				id,
+	 				id
 	 				pw,
 	 				name,
 	 				phone,
@@ -53,6 +53,7 @@ resultType 및 parameterType 관련 꿀팁
 	 <select id="checkId" resultType="String">
 	 	SELECT id FROM user WHERE id = #{checkId};
 	 </select>
+	 
 	 
 	 <!-- 일정 예약하기 -->
 	 <insert id="requestdo" parameterType="com.example.demo.dto.BoardDTO">
@@ -188,6 +189,7 @@ resultType 및 parameterType 관련 꿀팁
 		</if>
 		
 		<if test="field == '공지'">
+		
 			SELECT * FROM notice WHERE type = #{field}
 				<if test="keyword != null">
 					AND title LIKE CONCAT('%',#{keyword},'%') 
@@ -210,7 +212,7 @@ resultType 및 parameterType 관련 꿀팁
 				</if>
 			ORDER BY idx DESC LIMIT #{limitNoticeNowPage}, #{limitNoticeList};	
 		</if>
-		
+
 	</select>
 	
 	<!-- 게시글 총 개수 -->
@@ -249,6 +251,15 @@ resultType 및 parameterType 관련 꿀팁
 		</if>
 	</select>
 	
+	<!-- 조회수 증가 -->
+	<update id="viewCount">
+		UPDATE notice
+		SET viewcount = viewcount + 1
+		WHERE idx = #{idx}
+	</update>
+	
+	<!-- 댓글 처리 관련 -->
+	<!-- 댓글 작성 -->
 	<insert id="commentWrite" parameterType="com.example.demo.dto.CommentDTO">
 		INSERT INTO comment
 		(
@@ -268,6 +279,7 @@ resultType 및 parameterType 관련 꿀팁
 		)
 	</insert>
 	
+	<!-- 댓글 가져오기-->
 	<select id="getComment" resultType="HashMap">
 		SELECT n.idx, 
 				n.type, 
@@ -286,7 +298,7 @@ resultType 및 parameterType 관련 꿀팁
 				c.modifydate AS cmodifydate 
 		FROM notice n JOIN  comment c
 			ON n.idx = c.notice_idx
-		WHERE n.idx = #{idx};
+		WHERE n.idx = #{idx} ORDER BY c.idx DESC;
 	</select>
 
 </mapper>

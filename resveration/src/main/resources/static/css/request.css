@@ -35,7 +35,7 @@ body {
 }
 
 .content table tr td:first-child {
-    width: 100px;
+    width: 40%;
 }
 
 .content table tr td .title {

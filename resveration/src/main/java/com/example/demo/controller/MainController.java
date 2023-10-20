@@ -219,10 +219,22 @@ public class MainController {
 
 	/* ===== 일자별 예약 현황 화면 보기 ===== */
 	@GetMapping("/reservation/{date}")
-	public String reservation_status(@PathVariable("date") String date, Model model) {
-
+	public String reservation_status(@PathVariable("date") String date, 
+			@AuthenticationPrincipal PrincipalDetails principalDetails,
+									Model model) {
+		
+		// 유저 권한 확인 (admin => 작성자 이름 다보임 , guest => 작성자 이름 가려짐)
+		if (principalDetails == null) {
+			String role = "outSide";
+			model.addAttribute("role", role);
+		} else {
+			model.addAttribute("userId", principalDetails.getUserid());
+			model.addAttribute("role", principalDetails.getUserRole());
+			System.out.println("@@@@@@@@@@@@@권한: " + principalDetails.getUserRole());
+		}
+		
 		List<BoardDTO> getReserv = mainService.getReservation(date);
-
+		System.out.println("@@@@@@@@@@@@@@@@@@@예약 id: " + getReserv.get(0).getBoardid());
 		model.addAttribute("getReserv", getReserv);
 
 		return "reservation_status";
@@ -401,9 +413,14 @@ public class MainController {
 			model.addAttribute("userId", principalDetails.getUserid());
 		}
 		
+		// 게시물 내용 가져오기
 		Map<String, Object> getIdxNotice = mainService.getIdxNotice(idx);
 		
+		// 댓글 가져오기
 		List<Map<String, Object>> getComment = mainService.getComment(idx);
+		
+		// 조회수 증가
+		mainService.viewCount(idx);
 		
 		model.addAttribute("comment", getComment);
 		model.addAttribute("notice", getIdxNotice);

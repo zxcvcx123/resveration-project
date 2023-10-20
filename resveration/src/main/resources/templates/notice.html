@@ -59,6 +59,7 @@
 						<th>제목</th>
 						<th>작성자</th>
 						<th>작성시간</th>
+						<th>조회수</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -75,6 +76,7 @@
 							<td th:text="${list.writer}"></td>
 						</th:block>
 						<td th:text="${list.date}"></td>
+						<td th:text="${list.viewcount}"></td>
 					</tr>
 				</tbody>
 			</table>

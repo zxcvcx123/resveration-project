@@ -62,6 +62,9 @@ public interface MainMapper {
 	/* 게시판 글 삭제 */
 	void noticeDelete(String idx);
 	
+	/* 조회수 증가 */
+	void viewCount(String idx);
+	
 	
 	
 	/* === 페이징 처리 관련 === */

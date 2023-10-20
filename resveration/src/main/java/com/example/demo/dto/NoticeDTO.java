@@ -18,6 +18,7 @@ public class NoticeDTO {
 	private String writerid;
 	private String date;
 	private String modifydate;
+	private String viewcount;
 	
 	private String saveMode;
 

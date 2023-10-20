@@ -204,6 +204,11 @@ public class MainService {
 	public void noticeDelete(String idx) {
 		mainMapper.noticeDelete(idx);
 	}
+	
+	/* 조회수 증가 */
+	public void viewCount(String idx) {
+		mainMapper.viewCount(idx);
+	}
 
 	/* ===== 페이징 처리 관련 ===== */
 	/* 게시판 글 목록 가져오기 */
