@@ -12,6 +12,17 @@
     <header th:replace="common/fragments/header :: HeaderFragment">
 		<p>헤더영역</p>
 	</header>
+	
+	<th:block th:each="num: ${#numbers.sequence(0,9)}">
+		<p th:text="${num}"></p>
+	</th:block>
+    
+    <p th:text="${#strings.substring('홍길동',1,2)} + ${#strings.repeat('*',2)}"></p>
+    
+    <p th:text="${#strings.repeat('*',3)}"></p>
+    
+    <p th:text="${#strings.length('010-0000-0000')}"></p>
+    
     
 </body>
 </html>

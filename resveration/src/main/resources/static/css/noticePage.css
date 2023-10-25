@@ -163,31 +163,60 @@
 	margin-top: 2%;
 	border-radius: 8px;
 }
-
-
-
 .comment_outLine {
 	
 	border-bottom: 2px solid black;
 	border-radius: 0px;
 	
 }
-
 .comment_outLine:last-child {
 	
 	border-bottom: 2px solid black;
 	border-radius: 0px;
 	
 }
-
 .comment_id {
 	font-size: 1.1rem;
 	margin-top: 1%;
 }
-
 .comment_content {
 	font-size: 2rem;
 	margin-top: 0.5%;
 	margin-bottom: 0.5%;
+	display: flex;
+    justify-content: space-between;
+	
+	
+}
+.comment_content_btn{
+	display: flex;
+    text-align: center;
+    align-items: flex-end;
+    justify-content: space-between;
+    width: 15%;
+    
+ 
+}
+.comment_content_btn > div > i{
+	position: relative;
+    top: 11px;
 }
 
+.comment_content_btn > div > i:hover{
+	cursor: pointer;
+}
+
+.comment_content_btn > a{
+	font-size: 1rem;
+}
+
+.comment_content_btn .like{
+	font-size: 1rem;
+	margin-right: 15%;
+}
+
+.comment_content_btn > a:hover{
+	border-bottom: 3px solid blue;
+}
+
+   

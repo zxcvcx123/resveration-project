@@ -8,6 +8,7 @@
 
 	<link rel="stylesheet" type="text/css" href="/css/common.css">
 	<link rel="stylesheet" type="text/css" href="/css/noticePage.css">
+	<script src="https://kit.fontawesome.com/2f3a50d5bd.js" crossorigin="anonymous"></script>
 
 </head>
 
@@ -63,6 +64,17 @@
 				</div>
 				<div class="comment_content">
 					<span th:text="${comment.comment}"></span>
+					
+					
+					<div class="comment_content_btn">
+						<div>
+							<i class="fa-regular fa-thumbs-up fa-2xs" onclick="checkLike()"></i>
+							<!--<i class="fa-solid fa-thumbs-up fa-2xs"></i>-->
+						</div>
+						<span class="like">좋아요 0</span>
+						<a href="">수정</a>
+						<a href="">삭제</a>
+					</div>
 				</div>
 			</div>
 		</div>
