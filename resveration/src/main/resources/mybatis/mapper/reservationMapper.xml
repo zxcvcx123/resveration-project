@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 위는 그냥 복붙 -->
+
+<!-- <mapper namespace="매퍼 또는 DAO클래스명">
+
+  <select id="명령어 클래스명" resultType="반환타입" 예)"UserDTO" parameterType="매개변수에 들어가는 타입" 예)"String">
+    쿼리문 예)SELET userid FROM user WHERE userid = #{}; #{}은 매개변수 넣기위한 문법이다
+  </select>
+
+</mapper> -->
+
+<!-- 
+resultType 및 parameterType 관련 꿀팁
+만약 여러개 조인 한 값을 result하고 싶으면 형식이 정해져 있는 예)잘 변하지 않는 규격화된 게시판 같은거는 DTO를 아예 만들어서 result 시키고
+그게 아닌면 Map을 통해서 사용하기
+
+파라미터는 매개변수값이 여러 타입이면 Map 활용
+-->
+
+<mapper namespace="com.example.demo.mapper.ReservationMapper">
+
+ <!-- 일정 예약하기 -->
+	 <insert id="requestdo" parameterType="com.example.demo.dto.BoardDTO">
+		INSERT INTO 
+			board(
+					boardid,
+					name, 
+					phone, 
+					count, 
+					day, 
+					time, 
+					timetype,
+					type, 
+					boarddate
+				  ) 
+			VALUES(
+					#{boardid},
+					#{name}, 
+					#{phone}, 
+					#{count}, 
+					#{day}, 
+					#{time}, 
+					#{timetype},
+					#{type}, 
+					#{boarddate}
+				   )
+	</insert>
+	
+	<!-- 예약일자 전부 가져오기 -->
+	<select id="getDay" parameterType="List">
+		SELECT day FROM board;
+	</select>
+	
+	<!-- 예약일 / 예약시간 가져오기 -->
+	<select id="getDayTime" resultType="com.example.demo.dto.BoardDTO">
+		SELECT day, time, timetype FROM board;
+	</select>
+	
+	<!-- 예약일자에 맞는 예약인원 가져오기 -->
+	<select id="getReservation" parameterType="com.example.demo.dto.BoardDTO">
+		SELECT * FROM board WHERE day = #{date} ORDER BY time ASC;
+	</select>
+	
+	<!-- 내 예약현황 가져오기 -->
+	<select id="getMyReservation" parameterType="com.example.demo.dto.BoardDTO">
+		SELECT * FROM board WHERE boardid = #{userId} ORDER BY day ASC, time ASC;
+	</select>
+	
+	<!-- 내 예약현화 수정하기 정보가져오기 -->
+	<select id="getMyReservationUPDATE" parameterType="com.example.demo.dto.BoardDTO">
+		SELECT * FROM board WHERE idx = #{idx};
+	</select>
+	
+	<!-- 예약정보 수정하기 -->
+	<update id="updatedo" parameterType="com.example.demo.dto.BoardDTO">
+		UPDATE board 
+			SET name = #{name}, 
+				phone = #{phone}, 
+				count = #{count}, 
+				day = #{day}, 
+				time = #{time},
+				timetype = #{timetype}, 
+				type = #{type},
+				boarddate = #{boarddate}
+		WHERE idx = #{idx};
+	</update>
+	
+	<!-- 예약취소하기 -->
+	<delete id="deleteMyReservation" parameterType="String">
+		DELETE FROM board WHERE idx = #{idx};
+	</delete>
+	 
+
+</mapper>

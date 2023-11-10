@@ -11,16 +11,39 @@
 	있는 예)잘 변하지 않는 규격화된 게시판 같은거는 DTO를 아예 만들어서 result 시키고 그게 아닌면 Map을 통해서 사용하기 
 	파라미터는 매개변수값이 여러 타입이면 Map 활용 -->
 
-<mapper namespace="com.example.demo.mapper.MainMapper">
+<mapper namespace="com.example.demo.mapper.MemberMapper">
 
-	<!-- 로그인하기 -->
-	<select id="searchId"
+	<!-- 회원가입하기 -->
+	<insert id="memberDo"
 		parameterType="com.example.demo.dto.UserDTO">
-		SELECT * FROM user WHERE id = #{userId};
+		INSERT INTO
+		user(
+		id
+		pw,
+		name,
+		phone,
+		email,
+		role,
+		date
+		)
+		VALUES(
+		#{id},
+		#{pw},
+		#{name},
+		#{phone},
+		#{email},
+		#{role},
+		#{date}
+		);
+	</insert>
+
+
+
+	<!-- 아이디 중복확인 -->
+	<select id="checkId" resultType="String">
+		SELECT id FROM user WHERE id =
+		#{checkId};
 	</select>
 
-
-
-	
 
 </mapper>

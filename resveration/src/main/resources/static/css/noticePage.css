@@ -219,4 +219,10 @@
 	border-bottom: 3px solid blue;
 }
 
+/* 댓글 페이징 영역 */
+.comment_pageing {
+	margin-top: 2%;
+	font-size: 1.5rem;
+	text-align: center;
+}
    

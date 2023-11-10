@@ -5,6 +5,7 @@ function modiBtn() {
 	location.href = href;
 }
 
+/* 게시물 삭제 */
 function deleteBtn() {
 
 	if (!confirm("정말 삭제 하시겠습니까?")) {
@@ -19,10 +20,11 @@ function deleteBtn() {
 
 }
 
+/* 댓글 작성하기 버튼 */
 function commentSubmit() {
-
+	let idx = document.getElementsByName('idx')[0].value;
 	let comment = {"comment": document.getElementById('comment').value};
-	let pathURL = window.location.href + "/comment";
+	let pathURL = "/notice/"+ idx + "/comment";
 	let cv = document.getElementsByClassName('comment_View');
 	
 	
@@ -60,4 +62,37 @@ function commentSubmit() {
 		, 1000);
 		
 	}
+}
+
+/* 댓글 페이징 ajax */
+/*function commentPagingView(num){
+	
+	let commentPagingNum = {cnum: $(num).text()};
+	let url = window.location.href;
+	
+	$.ajax({
+			type: "POST",
+			url: url,
+			data: JSON.stringify(commentPagingNum),
+			contentType: 'application/json; charset=utf-8',
+			success: function(result) {	
+				console.log(result);
+				
+			},
+			error: function(e) {
+				console.log(e)
+			}
+		})
+}*/
+
+/* 좋아용~ */
+function checkLike(cidx){
+	console.log(cidx);
+	
+
+	
+}
+
+function toLogin(){
+	window.location.href ="/login"
 }

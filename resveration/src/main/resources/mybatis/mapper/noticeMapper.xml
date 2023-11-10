@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 위는 그냥 복붙 -->
+
+<!-- <mapper namespace="매퍼 또는 DAO클래스명"> <select id="명령어 클래스명" resultType="반환타입" 
+	예)"UserDTO" parameterType="매개변수에 들어가는 타입" 예)"String"> 쿼리문 예)SELET userid 
+	FROM user WHERE userid = #{}; #{}은 매개변수 넣기위한 문법이다 </select> </mapper> -->
+
+<!-- resultType 및 parameterType 관련 꿀팁 만약 여러개 조인 한 값을 result하고 싶으면 형식이 정해져 
+	있는 예)잘 변하지 않는 규격화된 게시판 같은거는 DTO를 아예 만들어서 result 시키고 그게 아닌면 Map을 통해서 사용하기 
+	파라미터는 매개변수값이 여러 타입이면 Map 활용 -->
+
+<mapper namespace="com.example.demo.mapper.NoticeMapper">
+
+	<!-- 게시판 글쓰기 기능 -->
+	<insert id="noticeWriteDo"
+		parameterType="com.example.demo.dto.NoticeDTO">
+		INSERT INTO
+		notice(
+		type,
+		title,
+		content,
+		writer,
+		writerid,
+		date,
+		modifydate
+		)
+		VALUES(
+		#{type},
+		#{title},
+		#{content},
+		#{writer},
+		#{writerid},
+		#{date},
+		#{modifydate}
+		)
+	</insert>
+
+	<!-- 특정(idx 기준) 게시판 글 내용 가져오기 -->
+	<select id="getIdxNotice" resultType="map">
+		SELECT * FROM notice WHERE
+		idx = #{idx};
+	</select>
+
+	<!-- 게시판 글 업데이트 -->
+	<update id="noticeUpdate"
+		parameterType="com.example.demo.dto.NoticeDTO">
+		UPDATE notice
+		SET type = #{type},
+		title = #{title},
+		content = #{content},
+		writer = #{writer},
+		writerid = #{writerid},
+		modifydate = #{modifydate}
+		WHERE idx = #{idx};
+	</update>
+
+	<!-- 게시판 글 삭제 -->
+	<delete id="noticeDelete" parameterType="String">
+		DELETE FROM notice WHERE
+		idx=#{idx};
+	</delete>
+
+
+	<!-- 페이징 처리 관련 -->
+	<!-- 게시판 글 목록 가져오기 / limitNoticeList 만큼 -->
+	<select id="getNoticeList"
+		resultType="com.example.demo.dto.NoticeDTO">
+
+		<if test="field == null or field == ''">
+			SELECT * FROM notice ORDER BY idx DESC LIMIT
+			#{limitNoticeNowPage}, #{limitNoticeList};
+		</if>
+
+		<if test="field == '전체'">
+			SELECT * FROM notice
+			<if test="keyword != null">
+				WHERE title LIKE CONCAT('%',#{keyword},'%')
+			</if>
+			ORDER BY idx DESC LIMIT #{limitNoticeNowPage}, #{limitNoticeList};
+		</if>
+
+		<if test="field == '공지'">
+
+			SELECT * FROM notice WHERE type = #{field}
+			<if test="keyword != null">
+				AND title LIKE CONCAT('%',#{keyword},'%')
+			</if>
+			ORDER BY idx DESC LIMIT #{limitNoticeNowPage}, #{limitNoticeList};
+		</if>
+
+		<if test="field == '잡담'">
+			SELECT * FROM notice WHERE type = #{field}
+			<if test="keyword != null">
+				AND title LIKE CONCAT('%',#{keyword},'%')
+			</if>
+			ORDER BY idx DESC LIMIT #{limitNoticeNowPage}, #{limitNoticeList};
+		</if>
+
+		<if test="field == '문의'">
+			SELECT * FROM notice WHERE type = #{field}
+			<if test="keyword != null and keyword != ''">
+				AND title LIKE CONCAT('%',#{keyword},'%')
+			</if>
+			ORDER BY idx DESC LIMIT #{limitNoticeNowPage}, #{limitNoticeList};
+		</if>
+
+	</select>
+
+	<!-- 게시글 총 개수 -->
+	<select id="noticeTotal" resultType="Integer">
+
+		<if test="field == null">
+			SELECT COUNT(*) FROM notice;
+		</if>
+
+		<if test="field == '전체'">
+			SELECT COUNT(*) FROM notice
+			<if test="keyword != null">
+				WHERE title LIKE CONCAT('%',#{keyword},'%')
+			</if>
+		</if>
+
+		<if test="field == '공지'">
+			SELECT COUNT(*) FROM notice WHERE type = #{field}
+			<if test="keyword != null">
+				AND title LIKE CONCAT('%',#{keyword},'%')
+			</if>
+		</if>
+
+		<if test="field == '잡담'">
+			SELECT COUNT(*) FROM notice WHERE type = #{field}
+			<if test="keyword != null">
+				AND title LIKE CONCAT('%',#{keyword},'%')
+			</if>
+		</if>
+
+		<if test="field == '문의'">
+			SELECT COUNT(*) FROM notice WHERE type = #{field}
+			<if test="keyword != null">
+				AND title LIKE CONCAT('%',#{keyword},'%')
+			</if>
+		</if>
+	</select>
+
+	<!-- 조회수 증가 -->
+	<update id="viewCount">
+		UPDATE notice
+		SET viewcount = viewcount + 1
+		WHERE idx =
+		#{idx}
+	</update>
+
+	<!-- 댓글 처리 관련 -->
+	<!-- 댓글 작성 -->
+	<insert id="commentWrite"
+		parameterType="com.example.demo.dto.CommentDTO">
+		INSERT INTO comment
+		(
+		notice_idx,
+		comment,
+		writer,
+		writerid,
+		modifydate
+		)
+		VALUE
+		(
+		#{notice_idx},
+		#{comment},
+		#{writer},
+		#{writerid},
+		#{modifydate}
+		)
+	</insert>
+
+	<!-- 댓글 가져오기 -->
+	<select id="getComment" resultType="HashMap">
+		SELECT n.idx,
+		n.type,
+		n.title,
+		n.content,
+		n.writer,
+		n.writerid,
+		n.date,
+		n.modifydate,
+		c.idx AS cidx,
+		c.notice_idx,
+		c.comment,
+		c.writer AS cwriter,
+		c.writerid AS cwriterid,
+		c.date AS cdate,
+		c.modifydate AS cmodifydate
+		FROM notice n JOIN comment
+		c
+		ON n.idx = c.notice_idx
+		WHERE n.idx = #{notice_idx} ORDER BY c.idx ASC
+		LIMIT #{limitNoticeNowPage}, #{limitNoticeList} ;
+	</select>
+
+	<!-- 댓글 전체 개수 가져오기 -->
+	<select id="getCommentTotal" resultType="Integer">
+		SELECT COUNT(*)
+		FROM
+		comment
+		WHERE notice_idx = #{notice_idx};
+	</select>
+
+
+</mapper>

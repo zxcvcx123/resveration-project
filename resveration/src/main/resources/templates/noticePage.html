@@ -50,10 +50,18 @@
 	<div class="comment_Area">
 		<!-- 댓글 타이틀 -->
 		<h3>댓글</h3>
-		<div class="comment_From">
-			<input type="text" id="comment" maxlength="100" placeholder="댓글을 입력해주세요 100자 이하">
-			<button type="button" onclick="commentSubmit()">작성하기</button>
-		</div>
+		<th:block th:if="${role != 'outSide'}">
+			<div class="comment_From">
+				<input type="text" id="comment" maxlength="100" placeholder="댓글을 입력해주세요 100자 이하">
+				<button type="button" onclick="commentSubmit()">작성하기</button>
+			</div>
+		</th:block>
+		<th:block th:if="${role == 'outSide'}">
+			<div class="comment_From">
+				<input type="text" id="comment" maxlength="100" placeholder="로그인을 해야 댓글 작성이 가능합니다." readonly>
+				<button type="button" onclick="toLogin()">로그인</button>
+			</div>
+		</th:block>
 		
 		
 			
@@ -68,8 +76,8 @@
 					
 					<div class="comment_content_btn">
 						<div>
-							<i class="fa-regular fa-thumbs-up fa-2xs" onclick="checkLike()"></i>
-							<!--<i class="fa-solid fa-thumbs-up fa-2xs"></i>-->
+							<i class="fa-regular fa-thumbs-up fa-2xs" th:onclick="checkLike([[${comment.cidx}]])"></i>
+							<i class="fa-solid fa-thumbs-up fa-2xs" style="display: none;"></i>
 						</div>
 						<span class="like">좋아요 0</span>
 						<a href="">수정</a>
@@ -77,6 +85,15 @@
 					</div>
 				</div>
 			</div>
+		</div>
+		
+		<div class="comment_pageing">
+			<th:block th:each="num : ${#numbers.sequence(startPage, endPage)}">
+				
+				<a  th:href="@{'/notice/'+${idx}(cp=${num})}" th:text="${num}"></a>
+				
+			
+			</th:block>
 		</div>
 	</div>
 	
