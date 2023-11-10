@@ -18,7 +18,7 @@
 		parameterType="com.example.demo.dto.UserDTO">
 		INSERT INTO
 		user(
-		id
+		id,
 		pw,
 		name,
 		phone,
@@ -41,8 +41,7 @@
 
 	<!-- 아이디 중복확인 -->
 	<select id="checkId" resultType="String">
-		SELECT id FROM user WHERE id =
-		#{checkId};
+		SELECT id FROM user WHERE id = #{checkId};
 	</select>
 
 
