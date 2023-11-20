@@ -7,6 +7,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.example.demo.dto.CommentDTO;
+import com.example.demo.dto.CommentLikeDTO;
 import com.example.demo.dto.CommentPageDTO;
 import com.example.demo.dto.NoticeDTO;
 import com.example.demo.dto.PageDTO;
@@ -51,5 +52,13 @@ public interface NoticeMapper {
 	/* 해당 페이지의 댓글 전체 개수 가져오기 */
 	Integer getCommentTotal(CommentPageDTO commentPageDTO);
 	
-
+	/* 해당 게시물 댓글에 좋아요를 눌러서 있으면 좋아요 한거고 없으면 안한거고 */
+	int likeFind(CommentLikeDTO like);
+	
+	/* 좋아요 추가 */
+	int commentLike(CommentLikeDTO like);
+	
+	
+	/* 좋아요 취소 */
+	int commentLikeDelete(CommentLikeDTO like);
 }

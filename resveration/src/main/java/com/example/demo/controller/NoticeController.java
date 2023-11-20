@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.example.demo.auth.PrincipalDetails;
 import com.example.demo.dto.CommentDTO;
+import com.example.demo.dto.CommentLikeDTO;
 import com.example.demo.dto.CommentPageDTO;
 import com.example.demo.dto.NoticeDTO;
 import com.example.demo.dto.PageDTO;
@@ -282,11 +284,17 @@ public class NoticeController {
 	
 	/* ===== 댓글 좋아요 ===== */
 	@PostMapping("/api/comment/likeup")
-	public ResponseEntity<?> commentLikeUp(@RequestBody Map<String, Object> map) {
-		System.out.println("@@@@@ " + map.get("idx")+"번 댓글 좋아요 눌렀습니다. @@@@@");
+	public ResponseEntity<?> commentLike(@RequestBody CommentLikeDTO like,
+											@AuthenticationPrincipal PrincipalDetails principalDetails) {
+
+		if(!noticeService.commentLike(like, principalDetails)) {
+			// 좋아요 되어 있으면 true 리턴
+			return ResponseEntity.ok(true);
+		} else {
+			// 좋아요 안되어 있으면 false 리턴
+			return ResponseEntity.ok(false);
+		}
 		
-		String likeCount = noticeService.getCommentLikeCount(map.get("id"));
-		
-		return ResponseEntity.ok().build();
+	
 	}
 }

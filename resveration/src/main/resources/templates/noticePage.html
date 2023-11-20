@@ -77,8 +77,8 @@
 					<div class="comment_content_btn">
 						<div>
 							
-							<i class="fa-regular fa-thumbs-up fa-2xs" th:onclick="checkLike([[${comment.cidx}]])"></i>
-							<i class="fa-solid fa-thumbs-up fa-2xs" style="display: none;"></i>
+							<i class="fa-regular fa-thumbs-up fa-2xs" id="likeBtn" th:data-cidx="${comment.cidx}" th:data-bidx="${idx}"></i>
+							<i class="fa-solid fa-thumbs-up fa-2xs" id="deLikeBtn" style="display: none;"></i>
 							
 						</div>
 						<span class="like">좋아요</span>
@@ -101,7 +101,6 @@
 			</th:block>
 		</div>
 	</div>
-	
 	
 	
 	<br> <br> <br> <br> <br>

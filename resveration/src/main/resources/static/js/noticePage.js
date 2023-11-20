@@ -103,15 +103,11 @@ function commentSubmit() {
 }*/
 
 /* 좋아용~ */
-function checkLike(cidx){
-	
-	let cdata = { 
-					idx: cidx,
-					up: 1	
+document.getElementById('likeBtn').addEventListener("click", ()=>{
+	let cdata = {   
+					notice_idx: document.getElementById('likeBtn').dataset.bidx,
+					comment_idx: document.getElementById('likeBtn').dataset.cidx
 				}
-	
-	// 댓글 누른 id 값
-	let pos = "c"+cidx;
 	
 	$.ajax({
 		type: "POST",
@@ -119,16 +115,22 @@ function checkLike(cidx){
 		data: JSON.stringify(cdata),
 		contentType: 'application/json; charset=utf-8',
 		success: function(res){
-			document.getElementById(pos).innerText = res.data.likecount;
+			if(res.data){
+				document.getElementById('likeBtn').style.display="none"
+				document.getElementById('deLikeBtn').style.display="block"
+			}
+			
+			if(!res.data){
+				document.getElementById('likeBtn').style.display="block"
+				document.getElementById('deLikeBtn').style.display="none"
+			}
 		},
 		error: function(e){
 			console.log(e);
 		}
 	})
-	
+});
 
-	
-}
 
 function toLogin(){
 	window.location.href ="/login"

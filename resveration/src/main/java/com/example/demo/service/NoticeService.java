@@ -8,7 +8,9 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.example.demo.auth.PrincipalDetails;
 import com.example.demo.dto.CommentDTO;
+import com.example.demo.dto.CommentLikeDTO;
 import com.example.demo.dto.CommentPageDTO;
 import com.example.demo.dto.NoticeDTO;
 import com.example.demo.dto.PageDTO;
@@ -91,6 +93,25 @@ public class NoticeService {
 	/* 해당 페이지의 댓글 전체 수 가져오기 */
 	public Integer getCommentTotal(CommentPageDTO commentPageDTO) {
 		return noticeMapper.getCommentTotal(commentPageDTO);
+	}
+	
+	/* 댓글 좋아요 */
+	public boolean commentLike(CommentLikeDTO like, PrincipalDetails principalDetails) {
+		
+		like.setUser_id(principalDetails.getUserid());
+		
+		
+		System.out.println("@@@@@ "+ like.getUser_id() +"님이 " + like.getNotice_idx()+"번 게시물의 " + like.getComment_idx() + "번 댓글에 좋아요 눌렀습니다. @@@@@");
+		
+		// 좋아요 눌렀을 때 삭제 할 데이터 가 없으면 좋아요 된거
+		if(noticeMapper.commentLikeDelete(like) == 0) {
+			return noticeMapper.commentLike(like) == 1;
+		} else {
+			// 눌렀을 때 삭제 되면 좋아요 취소 된거
+			return noticeMapper.commentLikeDelete(like) == 0;
+		}
+		
+		
 	}
 	
 

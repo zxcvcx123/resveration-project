@@ -205,6 +205,33 @@
 		comment
 		WHERE notice_idx = #{notice_idx};
 	</select>
-
-
+	
+	<!-- 좋아요 기능 -->
+	<select id="likeFind" parameterType="com.example.demo.dto.CommentLikeDTO">
+		SELECT notice_idx, comment_idx ,user_id
+		FROM like_comment
+		WHERE notice_idx = #{notice_idx} 
+			  	AND
+			  comment_idx = #{comment_idx}
+			  	AND
+			  user_id = #{user_id}
+	</select>
+	
+	<insert id="commentLike" parameterType="com.example.demo.dto.CommentLikeDTO">
+		INSERT INTO like_comment (
+			notice_idx, comment_idx ,user_id
+		) VALUES (
+			#{notice_idx}, #{comment_idx} ,#{user_id}
+		)
+	</insert>
+	
+	<delete id="commentLikeDelete" parameterType="com.example.demo.dto.CommentLikeDTO">
+		DELETE FROM like_comment
+		WHERE notice_idx = #{notice_idx} 
+			  	AND
+			  comment_idx = #{comment_idx}
+			  	AND
+			  user_id = #{user_id}
+	</delete>
+	
 </mapper>
