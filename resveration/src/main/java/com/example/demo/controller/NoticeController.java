@@ -274,9 +274,19 @@ public class NoticeController {
 		List<Map<String, Object>> result = noticeService.getComment(commentPageDTO);
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
+		
 
 		return new ResponseEntity<>(result, headers, HttpStatus.OK);
 
 	}
-
+	
+	/* ===== 댓글 좋아요 ===== */
+	@PostMapping("/api/comment/likeup")
+	public ResponseEntity<?> commentLikeUp(@RequestBody Map<String, Object> map) {
+		System.out.println("@@@@@ " + map.get("idx")+"번 댓글 좋아요 눌렀습니다. @@@@@");
+		
+		String likeCount = noticeService.getCommentLikeCount(map.get("id"));
+		
+		return ResponseEntity.ok().build();
+	}
 }

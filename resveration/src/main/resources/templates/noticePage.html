@@ -76,12 +76,17 @@
 					
 					<div class="comment_content_btn">
 						<div>
+							
 							<i class="fa-regular fa-thumbs-up fa-2xs" th:onclick="checkLike([[${comment.cidx}]])"></i>
 							<i class="fa-solid fa-thumbs-up fa-2xs" style="display: none;"></i>
+							
 						</div>
-						<span class="like">좋아요 0</span>
-						<a href="">수정</a>
-						<a href="">삭제</a>
+						<span class="like">좋아요</span>
+						<span class="like" th:id="c+${comment.cidx}">0</span>
+						<th:block th:if="${comment.cwriterid == userId}">
+							<a href="">수정</a>
+							<a href="">삭제</a>
+						</th:block>
 					</div>
 				</div>
 			</div>

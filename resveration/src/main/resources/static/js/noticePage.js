@@ -43,14 +43,31 @@ function commentSubmit() {
 			contentType: 'application/json; charset=utf-8',
 			success: function(result) {
 				alert("댓글 작성이 완료 되었습니다.");
-
-				userName = result[0].cwriter;
-				content = result[0].comment;
-				let text = "<div class='comment_outLine'><div class='comment_id'><span>" + userName + 
-					"</span></div> <div class='comment_content'><span>"+ content + 
-					"</span></div></div>";
-				cv[0].insertAdjacentHTML("afterbegin", text);
-				document.getElementById('comment').value = "";
+				
+				console.log(result)
+				
+				userName = result[result.length -1].cwriter;
+				content = result[result.length -1].comment;
+				let text = "<div class='comment_outLine'>" +
+								"<div class='comment_id'>" +
+									"<span>" + userName + "</span>" +
+								"</div>" +								
+								"<div class='comment_content'>" +
+									"<span>"+ content + "</span>" +
+									
+								"<div class='comment_content_btn'>" +
+									"<div>" +
+										"<i class='fa-regular fa-thumbs-up fa-2xs' th:onclick='checkLike([[${comment.cidx}]])'></i>" +
+										"<i class='fa-solid fa-thumbs-up fa-2xs' style='display: none;'></i>" +
+									"</div>" +
+									"<span class='like'>좋아요 0</span>" +
+									"<a href=''>수정</a>" +
+									"<a href=''>삭제</a>" +
+									"</div>" +
+								"</div>" +
+							"</div>";
+				cv[0].insertAdjacentHTML("afterend", text);
+	
 
 				
 			},
@@ -87,7 +104,27 @@ function commentSubmit() {
 
 /* 좋아용~ */
 function checkLike(cidx){
-	console.log(cidx);
+	
+	let cdata = { 
+					idx: cidx,
+					up: 1	
+				}
+	
+	// 댓글 누른 id 값
+	let pos = "c"+cidx;
+	
+	$.ajax({
+		type: "POST",
+		url: "/api/comment/likeup",
+		data: JSON.stringify(cdata),
+		contentType: 'application/json; charset=utf-8',
+		success: function(res){
+			document.getElementById(pos).innerText = res.data.likecount;
+		},
+		error: function(e){
+			console.log(e);
+		}
+	})
 	
 
 	

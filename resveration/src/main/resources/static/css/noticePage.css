@@ -212,8 +212,10 @@
 
 .comment_content_btn .like{
 	font-size: 1rem;
-	margin-right: 15%;
+	margin-right: 0%;
 }
+
+
 
 .comment_content_btn > a:hover{
 	border-bottom: 3px solid blue;
