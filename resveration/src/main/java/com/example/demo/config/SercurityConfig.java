@@ -54,7 +54,7 @@ public class SercurityConfig {
 		.passwordParameter("userPw")
 		.loginPage("/login") // 기본 로그인 페이지말고 내가 지정한 로그인 페이지로 이동 loginPage("매핑주소") / disable() 로그인 페이지로 이동 x
 		.loginProcessingUrl("/loginDo") // /login 주소가 호출이 되면 시큐리티가 낚아채서 대신 로그인을 진행 해준다. *컨트롤러에서 login을 따로 안만들어도 된다.
-		.defaultSuccessUrl("/home"); //로그인 성공시 기본적으로 이동하는 url을 설정
+		.defaultSuccessUrl("/reservation"); //로그인 성공시 기본적으로 이동하는 url을 설정
 		 
 		http.logout()
 			.logoutUrl("/logout")//로그아웃 처리 URL ( = from action url)

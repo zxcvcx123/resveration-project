@@ -3,6 +3,7 @@ package com.example.demo.service;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -95,24 +96,17 @@ public class NoticeService {
 		return noticeMapper.getCommentTotal(commentPageDTO);
 	}
 	
-	/* 댓글 좋아요 */
-	public boolean commentLike(CommentLikeDTO like, PrincipalDetails principalDetails) {
+	/* 좋아요 */
+	public void like(CommentLikeDTO like,
+					PrincipalDetails user) {
 		
-		like.setUser_id(principalDetails.getUserid());
+		like.setUser_id(user.getUserid());
 		
-		
-		System.out.println("@@@@@ "+ like.getUser_id() +"님이 " + like.getNotice_idx()+"번 게시물의 " + like.getComment_idx() + "번 댓글에 좋아요 눌렀습니다. @@@@@");
-		
-		// 좋아요 눌렀을 때 삭제 할 데이터 가 없으면 좋아요 된거
-		if(noticeMapper.commentLikeDelete(like) == 0) {
-			return noticeMapper.commentLike(like) == 1;
-		} else {
-			// 눌렀을 때 삭제 되면 좋아요 취소 된거
-			return noticeMapper.commentLikeDelete(like) == 0;
-		}
-		
+		if(noticeMapper.likeDelete(like) == 0) {
+			// 삭제할게 없으니 insert
+			noticeMapper.insertLike(like);
+		} 
 		
 	}
-	
 
 }

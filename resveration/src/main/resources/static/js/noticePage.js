@@ -103,7 +103,7 @@ function commentSubmit() {
 }*/
 
 /* 좋아용~ */
-document.getElementById('likeBtn').addEventListener("click", ()=>{
+/*document.getElementById('likeBtn').addEventListener("click", ()=>{
 	let cdata = {   
 					notice_idx: document.getElementById('likeBtn').dataset.bidx,
 					comment_idx: document.getElementById('likeBtn').dataset.cidx
@@ -115,22 +115,20 @@ document.getElementById('likeBtn').addEventListener("click", ()=>{
 		data: JSON.stringify(cdata),
 		contentType: 'application/json; charset=utf-8',
 		success: function(res){
-			if(res.data){
-				document.getElementById('likeBtn').style.display="none"
-				document.getElementById('deLikeBtn').style.display="block"
-			}
-			
-			if(!res.data){
-				document.getElementById('likeBtn').style.display="block"
-				document.getElementById('deLikeBtn').style.display="none"
-			}
+			console.log(res.bool);
+			console.log(res.countLike);
 		},
 		error: function(e){
 			console.log(e);
 		}
 	})
-});
+});*/
 
+
+/* 업데이트 표시 */
+function updatIng(){
+	alert("업데이트 예정");
+}
 
 function toLogin(){
 	window.location.href ="/login"

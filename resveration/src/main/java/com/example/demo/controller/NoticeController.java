@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import java.nio.charset.Charset;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -285,15 +286,11 @@ public class NoticeController {
 	/* ===== 댓글 좋아요 ===== */
 	@PostMapping("/api/comment/likeup")
 	public ResponseEntity<?> commentLike(@RequestBody CommentLikeDTO like,
-											@AuthenticationPrincipal PrincipalDetails principalDetails) {
-
-		if(!noticeService.commentLike(like, principalDetails)) {
-			// 좋아요 되어 있으면 true 리턴
-			return ResponseEntity.ok(true);
-		} else {
-			// 좋아요 안되어 있으면 false 리턴
-			return ResponseEntity.ok(false);
-		}
+											@AuthenticationPrincipal PrincipalDetails user) {
+		
+		noticeService.like(like, user);
+		
+		return ResponseEntity.ok().build();
 		
 	
 	}

@@ -59,6 +59,11 @@ public class MainController {
 	private final MainService mainService;
 
 	/* ===== login 페이지 ===== */
+	@GetMapping("/")
+	public String indexPage() {
+		return "login";
+	}
+	
 	@GetMapping("/login")
 	public String loginPage() {
 		return "login";

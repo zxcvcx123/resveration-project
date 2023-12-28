@@ -75,17 +75,17 @@
 					
 					
 					<div class="comment_content_btn">
-						<div>
+						<!--<div>
 							
 							<i class="fa-regular fa-thumbs-up fa-2xs" id="likeBtn" th:data-cidx="${comment.cidx}" th:data-bidx="${idx}"></i>
 							<i class="fa-solid fa-thumbs-up fa-2xs" id="deLikeBtn" style="display: none;"></i>
 							
 						</div>
 						<span class="like">좋아요</span>
-						<span class="like" th:id="c+${comment.cidx}">0</span>
+						<span class="like" th:id="c+${comment.cidx}">0</span>-->
 						<th:block th:if="${comment.cwriterid == userId}">
-							<a href="">수정</a>
-							<a href="">삭제</a>
+							<a href="javascript:void(0);" onclick="updatIng()">수정</a>
+							<a href="javascript:void(0);" onclick="updatIng()">삭제</a>
 						</th:block>
 					</div>
 				</div>
