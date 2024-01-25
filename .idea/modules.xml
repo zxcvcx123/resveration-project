@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/resveration-project.iml" filepath="$PROJECT_DIR$/.idea/resveration-project.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/resveration-project.resveration.main.iml" filepath="$PROJECT_DIR$/.idea/modules/resveration-project.resveration.main.iml" />
     </modules>
   </component>
 </project>
